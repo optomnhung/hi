@@ -134,8 +134,11 @@
     <div class="petal"></div>
   </div>
 
-  <!-- Audio -->
-  <audio id="bgMusic" loop src="./public/music/wedding-song.mp3"></audio>
+    <!-- Nhạc nền mặc định của thiệp -->
+    <audio id="bgMusic" src="./public/music/wedding-song.mp3" loop></audio>
+
+    <!-- THÊM THẺ NÀY: Nhạc riêng khi xem Album Ảnh (Thay link bài hát tùy ý) -->
+    <audio id="albumMusic" src="./public/music/wes.mp3" loop></audio>
 
   <!-- Floating Music Button -->
   <div id="musicBtnWrap" class="fixed bottom-6 left-6 z-40 transition-all duration-1000 opacity-0 translate-y-20">
@@ -315,15 +318,17 @@
       <div class="mt-16 flex justify-center">
          <div class="max-w-4xl w-full">
             <!-- Event 1 -->
-            <div class="reveal-on-scroll delay-100 relative mb-12 last:mb-0 mx-auto group w-full px-4">
-                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-24 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
+            <div class="reveal-on-scroll delay-100 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
+                <!-- Đổi pr-24 thành pr-4 trên mobile để chữ tự xuống dòng rộng rãi, lên md mới dùng pr-64 -->
+                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
                    <h3 class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">Bữa Cơm Thân Mật</h3>
-                   <div class="space-y-4">
+                   <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
+                   <div class="space-y-4 w-2/3 md:w-full">
                        <div class="flex items-start gap-4">
                            <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
                            <div>
                                <p class="font-semibold text-lg">00:00</p>
-                               <p class="text-sm text-gray-300 italic">Thứ ..., 12/12/2026 (.../... Âm lịch)</p>
+                               <p class="text-sm text-gray-300 italic whitespace-normal break-words">Thứ ..., 12/12/2026<br class="md:hidden"/> (.../... Âm lịch)</p>
                            </div>
                        </div>
                         <div class="flex items-start gap-4">
@@ -331,26 +336,29 @@
                            <div>
                                <p class="font-semibold text-lg">Tư gia Nhà ...</p>
                                <p class="text-sm text-gray-300 leading-relaxed">Số ....</p>
-                               <a href="#" class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem bản đồ</a>
+                               <a href="https://maps.app.goo.gl/ZtnaomPm3Wzo56eq6" class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem bản đồ</a>
                            </div>
                        </div>
                    </div>
                 </div>
-                <div class="absolute top-1/2 -translate-y-1/2 right-4 md:right-0 w-32 h-32 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
+                <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile để không đè lên chữ -->
+                <div class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
                    <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover" />
                 </div>
              </div>
 
              <!-- Event 2 -->
-             <div class="reveal-on-scroll delay-300 relative mb-12 last:mb-0 mx-auto group w-full px-4">
-                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-24 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
+             <div class="reveal-on-scroll delay-300 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
+                <!-- Đổi pr-24 thành pr-4 trên mobile -->
+                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
                    <h3 class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">Lễ Thành Hôn</h3>
-                   <div class="space-y-4">
+                   <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
+                   <div class="space-y-4 w-2/3 md:w-full">
                        <div class="flex items-start gap-4">
                            <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
                            <div>
                                <p class="font-semibold text-lg">00:00</p>
-                               <p class="text-sm text-gray-300 italic">Chủ Nhật, 12/12/2026 (.../... Âm lịch)</p>
+                               <p class="text-sm text-gray-300 italic whitespace-normal break-words">Chủ Nhật, 12/12/2026<br class="md:hidden"/> (.../... Âm lịch)</p>
                            </div>
                        </div>
                         <div class="flex items-start gap-4">
@@ -363,12 +371,14 @@
                        </div>
                    </div>
                 </div>
-                <div class="absolute top-1/2 -translate-y-1/2 right-4 md:right-0 w-32 h-32 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
+                <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile -->
+                <div class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
                    <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover" />
                 </div>
              </div>
          </div>
       </div>
+      
     </div>
   </section>
 
@@ -495,7 +505,7 @@
     </div>
   </section>
 
-  <!-- RSVP -->
+<!-- RSVP -->
   <section class="py-20 bg-rose-50">
     <div class="container mx-auto px-4 max-w-2xl">
       <div class="reveal-on-scroll text-center mb-12">
@@ -504,14 +514,41 @@
       </div>
       <div class="reveal-on-scroll delay-200 bg-white p-8 md:p-12 rounded-2xl shadow-xl">
          <h3 class="font-serif text-2xl text-center mb-6 text-slate-700">Xác nhận tham dự (RSVP)</h3>
-         <form class="space-y-4" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã gửi lời chúc!');">
-           <div><label class="block text-sm font-medium text-slate-600 mb-1">Tên của bạn</label><input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Nhập tên của bạn" required /></div>
-           <div class="grid grid-cols-2 gap-4">
-             <div><label class="block text-sm font-medium text-slate-600 mb-1">Số người</label><select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition"><option>1 người</option><option>2 người</option><option>Đi cùng gia đình</option></select></div>
-             <div><label class="block text-sm font-medium text-slate-600 mb-1">Tham dự</label><select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition"><option>Chắc chắn tham dự</option><option>Xin lỗi, mình bận rồi</option></select></div>
+         
+         <!-- Thêm id vào form để bắt sự kiện -->
+         <form id="rsvpForm" class="space-y-4">
+           <div>
+              <label class="block text-sm font-medium text-slate-600 mb-1">Tên của bạn</label>
+              <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Nhập tên của bạn" required />
            </div>
-           <div><label class="block text-sm font-medium text-slate-600 mb-1">Lời chúc</label><textarea rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Gửi lời chúc đến cô dâu chú rể..."></textarea></div>
-           <button type="submit" class="w-full bg-slate-700 text-white py-4 rounded-lg font-bold hover:bg-slate-800 transition">Gửi xác nhận</button>
+           
+           <div class="grid grid-cols-2 gap-4">
+             <div>
+                <label class="block text-sm font-medium text-slate-600 mb-1">Số người</label>
+                <select id="guests" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
+                    <option value="1 người">1 người</option>
+                    <option value="2 người">2 người</option>
+                    <option value="Đi cùng gia đình">Đi cùng gia đình</option>
+                </select>
+             </div>
+             <div>
+                <label class="block text-sm font-medium text-slate-600 mb-1">Tham dự</label>
+                <select id="attend" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
+                    <option value="Chắc chắn tham dự">Chắc chắn tham dự</option>
+                    <option value="Xin lỗi, mình bận rồi">Xin lỗi, mình bận rồi</option>
+                </select>
+             </div>
+           </div>
+           
+           <div>
+              <label class="block text-sm font-medium text-slate-600 mb-1">Lời chúc</label>
+              <textarea id="message" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Gửi lời chúc đến cô dâu chú rể..."></textarea>
+           </div>
+           
+           <!-- Nút submit tự động đổi trạng thái khi đang gửi -->
+           <button type="submit" id="submitBtn" class="w-full bg-slate-700 text-white py-4 rounded-lg font-bold hover:bg-slate-800 transition flex justify-center items-center gap-2">
+              <span>Gửi xác nhận</span>
+           </button>
          </form>
       </div>
     </div>
@@ -540,7 +577,51 @@
     </button>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- Script xử lý gửi dữ liệu lên Google Sheet không load lại trang -->
+  <script>
+    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+      e.preventDefault(); 
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.innerHTML;
+      
+      // HIỆU ỨNG ĐANG GỬI
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Đang gửi...</span>';
+
+      // Link Web App của bạn
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzJFTY7IBZTer-Q6lKKDPXPNkjXQMuJb6LZalNFdOUmNWCnVGLOw-gnIRbKM_wWAGFRLg/exec';
+
+      // Chuyển dữ liệu sang định dạng URLSearchParams giúp Google API nhận diện tốt hơn
+      const formData = new URLSearchParams();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('guests', document.getElementById('guests').value);
+      formData.append('attend', document.getElementById('attend').value);
+      formData.append('message', document.getElementById('message').value);
+
+      // Gửi dữ liệu qua phương thức POST thông thường
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors', // no-cors yêu cầu truyền dạng text/form-urlencoded để Apps Script bắt được dữ liệu ngầm
+        body: formData
+      })
+      .then(() => {
+        // XỬ LÝ KHI GỬI THÀNH CÔNG
+        alert('Cảm ơn bạn đã gửi lời chúc phúc!');
+        document.getElementById('rsvpForm').reset(); 
+      })
+      .catch(error => {
+        console.error('Lỗi:', error);
+        alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      });
+    });
+  </script>
+ 
+ <!-- JAVASCRIPT LOGIC -->
   <script>
     // --- KHAI BÁO BIẾN TRẠNG THÁI ---
     let isOpen = false;
@@ -705,9 +786,10 @@
       document.body.removeChild(link);
     }
 
-    // --- 6. XỬ LÝ ALBUM ẨN/HIỆN & LIGHTBOX XEM TỪNG ẢNH ---
+// --- 6. XỬ LÝ ALBUM ẨN/HIỆN & LIGHTBOX XEM TỪNG ẢNH ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
+    const albumAudio = document.getElementById('albumMusic'); // Khai báo thêm audio album
     let currentImageIndex = 0;
     
     // Danh sách ảnh trong album cưới
@@ -727,7 +809,7 @@
       const btnIcon = document.querySelector('#albumControlBtn i');
 
       if (gallery.classList.contains('hidden')) {
-        // Hiện album ảnh
+        // --- BẮT ĐẦU MỞ ALBUM ---
         gallery.classList.remove('hidden');
         gallery.classList.add('grid');
         setTimeout(() => {
@@ -737,18 +819,20 @@
         btnText.innerText = "Đóng Album Ảnh";
         btnIcon.className = "ph-bold ph-x text-xl";
         
+        // 🎵 TẠM DỪNG NHẠC NỀN & BẬT NHẠC ALBUM
+        audio.pause(); 
+        albumAudio.volume = 0.6; // Đặt âm lượng nhạc album
+        albumAudio.play().catch(e => console.log("Album audio play failed:", e));
+        
+        // Cập nhật trạng thái icon nhạc nền sang tạm dừng (nếu có)
+        musicIcon.classList.replace('ph-music-notes', 'ph-speaker-slash');
+        musicIcon.classList.remove('animate-spin-slow');
+
         // Tự động bật xem ảnh từ tấm đầu tiên
         openLightbox(GALLERY_IMAGES[0], 0);
       } else {
-        // Ẩn album ảnh
-        gallery.classList.add('opacity-0');
-        gallery.classList.remove('opacity-100');
-        setTimeout(() => {
-          gallery.classList.remove('grid');
-          gallery.classList.add('hidden');
-        }, 700);
-        btnText.innerText = "Mở Album Ảnh";
-        btnIcon.className = "ph-bold ph-images text-xl";
+        // --- ĐÓNG ALBUM TỪ NÚT CHÍNH ---
+        closeAlbumActions(gallery, btnText, btnIcon);
       }
     }
 
@@ -769,6 +853,37 @@
       lightbox.classList.add('hidden');
       lightbox.classList.remove('flex');
       if (isOpen) document.body.style.overflow = 'unset';
+      
+      // Nếu người dùng tắt lightbox nhưng Album vẫn đang mở thì không tắt nhạc album. 
+      // Nhưng nếu bạn muốn tắt nhạc album ngay khi vừa bấm X đóng ảnh, hãy để hàm đóng album chạy luôn:
+      const gallery = document.getElementById('weddingGallery');
+      const btnText = document.querySelector('#albumControlBtn span');
+      const btnIcon = document.querySelector('#albumControlBtn i');
+      if (!gallery.classList.contains('hidden')) {
+         closeAlbumActions(gallery, btnText, btnIcon);
+      }
+    }
+
+    // Hàm phụ dùng chung để đóng Album & Trả lại nhạc nền ban đầu
+    function closeAlbumActions(gallery, btnText, btnIcon) {
+      gallery.classList.add('opacity-0');
+      gallery.classList.remove('opacity-100');
+      setTimeout(() => {
+        gallery.classList.remove('grid');
+        gallery.classList.add('hidden');
+      }, 700);
+      btnText.innerText = "Mở Album Ảnh";
+      btnIcon.className = "ph-bold ph-images text-xl";
+
+      // 🎵 TẮT NHẠC ALBUM & PHÁT LẠI NHẠC NỀN
+      albumAudio.pause();
+      albumAudio.currentTime = 0; // Reset nhạc album về từ đầu
+      
+      if (isPlaying) { // Nếu trước đó người dùng đang bật nhạc nền thì phát lại
+        audio.play().catch(e => console.log("Bg music play failed:", e));
+        musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
+        musicIcon.classList.add('animate-spin-slow');
+      }
     }
 
     // Hàm chuyển đổi ảnh Trướct/Sau
