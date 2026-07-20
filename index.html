@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thiệp Cưới | Cô dâu & ...</title>
+  <title>Thiệp Cưới | Nhung Nhung & ...</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -68,12 +68,75 @@
     }
 
     .gate-panel { transition: transform 2s cubic-bezier(0.4, 0.0, 0.2, 1); }
+
+    /* Hiệu ứng cánh hoa rơi (Falling Petals) */
+  #petal-container {
+    position: fixed; /* Giữ cố định trên toàn bộ màn hình */
+    top: -50px; /* Bắt đầu từ phía trên màn hình một chút */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50; /* Đảm bảo cánh hoa rơi trên các lớp khác nhưng dưới Lightbox */
+    overflow: hidden; /* Không hiện thanh cuộn */
+    pointer-events: none; /* Cánh hoa không ảnh hưởng đến việc click */
+  }
+
+  .petal {
+    position: absolute;
+    background-color: #ffc0cb; /* Màu hồng nhẹ cho cánh hoa */
+    border-radius: 150% 0 150% 100%; /* Tạo hình dáng cánh hoa */
+    opacity: 0.8;
+    filter: blur(0.5px); /* Làm mờ một chút cho mềm mại */
+    animation: fall linear infinite; /* Sử dụng hoạt ảnh tên là 'fall' */
+  }
+
+  /* Định nghĩa hoạt ảnh 'fall' */
+  @keyframes fall {
+    0% {
+      transform: translateY(0vh) translateX(0px) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1; /* Cánh hoa hiện rõ hơn sau khi bắt đầu rơi */
+    }
+    100% {
+      /* Cánh hoa rơi xuống cuối màn hình, sang trái và xoay */
+      transform: translateY(105vh) translateX(-200px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* Tạo nhiều cánh hoa với kích thước và độ trễ khác nhau */
+  /* Sử dụng pseudo-elements để tạo 10 cánh hoa mà không cần thêm HTML */
+  #petal-container .petal:nth-child(1) { width: 15px; height: 20px; left: 10%; animation-duration: 10s; animation-delay: 0s; }
+  #petal-container .petal:nth-child(2) { width: 10px; height: 15px; left: 20%; animation-duration: 12s; animation-delay: 2s; background-color: #fff0f5; }
+  #petal-container .petal:nth-child(3) { width: 18px; height: 25px; left: 35%; animation-duration: 8s; animation-delay: 4s; }
+  #petal-container .petal:nth-child(4) { width: 12px; height: 18px; left: 50%; animation-duration: 15s; animation-delay: 1s; background-color: #fff; }
+  #petal-container .petal:nth-child(5) { width: 20px; height: 28px; left: 65%; animation-duration: 9s; animation-delay: 6s; }
+  #petal-container .petal:nth-child(6) { width: 15px; height: 20px; left: 80%; animation-duration: 11s; animation-delay: 3s; background-color: #ffc0cb; }
+  #petal-container .petal:nth-child(7) { width: 10px; height: 15px; left: 90%; animation-duration: 14s; animation-delay: 5s; }
+  #petal-container .petal:nth-child(8) { width: 18px; height: 25px; left: 5%; animation-duration: 10s; animation-delay: 7s; background-color: #fff0f5; }
+  #petal-container .petal:nth-child(9) { width: 12px; height: 18px; left: 25%; animation-duration: 13s; animation-delay: 2s; }
+  #petal-container .petal:nth-child(10) { width: 20px; height: 28px; left: 75%; animation-duration: 8s; animation-delay: 0s; background-color: #fff; }
   </style>
 </head>
 <body class="font-serif text-gray-800 relative">
+       <!-- /* Hiệu ứng cánh hoa rơi (Falling Petals) */ -->
+<div id="petal-container">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+  </div>
 
   <!-- Audio -->
-  <audio id="bgMusic" loop src="./public/music/wedding-song.mp3"></audio>
+  <audio id="bgMusic" loop src="./nhungnhung/public/music/wedding-song.mp3"></audio>
 
   <!-- Floating Music Button -->
   <div id="musicBtnWrap" class="fixed bottom-6 left-6 z-40 transition-all duration-1000 opacity-0 translate-y-20">
@@ -92,10 +155,10 @@
   <!-- GATE OPENER -->
   <div id="gateOverlay" class="fixed inset-0 z-50 pointer-events-none flex visible">
     <div id="gateLeft" class="w-1/2 h-full bg-[#FAF7F2] relative border-r border-rose-100 gate-panel pointer-events-auto flex items-center justify-end translate-x-0">
-      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./public/images/gate-texture.jpg')"></div>
+      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./nhungnhung/public/images/gate-texture.jpg')"></div>
     </div>
     <div id="gateRight" class="w-1/2 h-full bg-[#FAF7F2] relative border-l border-rose-100 gate-panel pointer-events-auto flex items-center justify-start translate-x-0">
-      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./public/images/gate-texture.jpg')"></div>
+      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./nhungnhung/public/images/gate-texture.jpg')"></div>
     </div>
     
     <!-- Nút Mở Thiệp -->
@@ -104,7 +167,7 @@
         <div class="absolute inset-0 border-4 border-double border-rose-200 rounded-full m-2 animate-spin-slow"></div>
         <div class="z-10 text-center flex flex-col items-center gap-2">
           <div class="w-24 h-24">
-             <img src="./public/images/Anh-gif-mo-thiep.jpg" alt="Mở thiệp" class="w-full h-full object-contain" />
+             <img src="./nhungnhung/public/images/Anh-gif-mo-thiep.jpg" alt="Mở thiệp" class="w-full h-full object-contain" />
           </div>
           <p class="font-script text-3xl text-rose-500 mt-2 group-hover:text-rose-600 transition-colors">Mở thiệp</p>
         </div>
@@ -116,14 +179,14 @@
   <section class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
     <div class="absolute inset-0 z-0">
       <div class="absolute inset-0 bg-black/40 z-10"></div>
-      <img src="./public/images/anh-nen.jpg" alt="Background" class="w-full h-full object-cover object-top blur-[2px]" />
+      <img src="./nhungnhung/public/images/anh-nen.jpg" alt="Background" class="w-full h-full object-cover object-top blur-[2px]" />
     </div>
     <div class="relative z-10 text-white px-4">
       <div class="reveal-on-scroll delay-0">
         <p class="font-sans text-sm md:text-lg tracking-[0.3em] uppercase mb-4 text-rose-100">Save The Date</p>
         <h1 class="font-script text-7xl md:text-9xl mb-2 text-rose-50">Chú rể</h1>
         <span class="font-script text-5xl md:text-7xl text-rose-200">&</span>
-        <h1 class="font-script text-7xl md:text-9xl mt-2 mb-8 text-rose-50">Cô dâu</h1>
+        <h1 class="font-script text-7xl md:text-9xl mt-2 mb-8 text-rose-50">Nhung Nhung</h1>
         <div class="w-24 h-1 bg-rose-400 mx-auto mb-8"></div>
         <p class="font-serif text-xl md:text-2xl italic tracking-wide">12 tháng 12 năm 2026</p>
       </div>
@@ -138,8 +201,8 @@
     </div>
     <div class="reveal-on-scroll delay-200 w-full relative">
         <div class="flex w-full h-[60vh] md:h-[80vh] relative">
-           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden border-r-[1px] border-white/20" onclick="openLightbox('./public/images/chu-re.jpg')">
-             <img src="./public/images/chu-re.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
+           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden border-r-[1px] border-white/20" onclick="openLightbox('./nhungnhung/public/images/chu-re.jpg')">
+             <img src="./nhungnhung/public/images/chu-re.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity"></div>
              <div class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
                <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Chú rể</h3>
@@ -147,11 +210,11 @@
              </div>
              <div class="absolute top-6 left-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100"><i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
            </div>
-           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden" onclick="openLightbox('./public/images/co-dau.jpg')">
-             <img src="./public/images/co-dau.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
+           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden" onclick="openLightbox('./nhungnhung/public/images/co-dau.jpg')">
+             <img src="./nhungnhung/public/images/co-dau.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity"></div>
              <div class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-               <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Cô dâu</h3>
+               <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Nhung Nhung</h3>
                <p class="text-rose-200 text-sm md:text-lg uppercase tracking-[0.3em] font-medium">Cô Dâu</p>
              </div>
              <div class="absolute top-6 right-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100"><i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
@@ -189,7 +252,7 @@
         <div class="text-center mb-8">
           <h2 class="font-script text-5xl md:text-6xl text-rose-500 mb-2">Chú rể</h2>
           <i class="ph-fill ph-heart text-rose-400 animate-pulse text-xl mx-2"></i>
-          <h2 class="font-script text-5xl md:text-6xl text-rose-500 mt-2">Cô dâu</h2>
+          <h2 class="font-script text-5xl md:text-6xl text-rose-500 mt-2">Nhung Nhung</h2>
         </div>
         <div class="text-center mb-2">
           <p class="font-sans text-gray-600 uppercase text-sm mb-2 font-bold tracking-widest">Được tổ chức vào hồi</p>
@@ -214,7 +277,7 @@
   </section>
 
   <!-- STORY & EVENTS -->
-  <section id="countdown-section" class="py-20 bg-cover bg-center bg-fixed relative" style="background-image: url('./public/images/countdown-bg.jpg')">
+  <section id="countdown-section" class="py-20 bg-cover bg-center bg-fixed relative" style="background-image: url('./nhungnhung/public/images/countdown-bg.jpg')">
     <div class="absolute inset-0 bg-white/90"></div>
     <div class="container mx-auto px-4 relative z-10">
       <div class="reveal-on-scroll delay-0 text-center mb-16">
@@ -275,7 +338,7 @@
                    </div>
                 </div>
                 <div class="absolute top-1/2 -translate-y-1/2 right-4 md:right-0 w-32 h-32 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
-                   <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover" />
+                   <img src="./nhungnhung/public/images/gallery-1.jpg" class="w-full h-full object-cover" />
                 </div>
              </div>
 
@@ -302,11 +365,75 @@
                    </div>
                 </div>
                 <div class="absolute top-1/2 -translate-y-1/2 right-4 md:right-0 w-32 h-32 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
-                   <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover" />
+                   <img src="./nhungnhung/public/images/gallery-2.jpg" class="w-full h-full object-cover" />
                 </div>
              </div>
          </div>
       </div>
+    </div>
+  </section>
+
+  <!-- GALLERY (MAGAZINE LAYOUT) -->
+  <section class="bg-white">
+    <div class="reveal-on-scroll text-center py-20 bg-[#FDFBF7]">
+      <h2 class="font-script text-6xl text-rose-500 mb-2">Album Hình Cưới</h2>
+      <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Khoảnh khắc hạnh phúc</p>
+    </div>
+    
+    <div id="weddingGallery" class="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[400px] gap-0 w-full">
+        <!-- Ảnh 1 (Lớn) -->
+        <div class="reveal-on-scroll delay-100 relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2 md:row-span-2" onclick="openLightbox('./nhungnhung/public/images/gallery-1.jpg', 0)">
+          <div class="w-full h-full relative">
+            <img src="./nhungnhung/public/images/gallery-1.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+              <div class="absolute bottom-4 left-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                <h3 class="font-script text-5xl drop-shadow-md">Forever</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ảnh 2 -->
+        <div class="reveal-on-scroll delay-200 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./nhungnhung/public/images/gallery-2.jpg', 1)">
+          <div class="w-full h-full relative">
+            <img src="./nhungnhung/public/images/gallery-2.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                <i class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ảnh 3 -->
+        <div class="reveal-on-scroll delay-300 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./nhungnhung/public/images/gallery-3.jpg', 2)">
+          <img src="./nhungnhung/public/images/gallery-3.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+        </div>
+
+        <!-- Ảnh 4 -->
+        <div class="reveal-on-scroll delay-400 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./nhungnhung/public/images/gallery-4.jpg', 3)">
+          <img src="./nhungnhung/public/images/gallery-4.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+        </div>
+
+        <!-- Ảnh 5 -->
+        <div class="reveal-on-scroll delay-500 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./nhungnhung/public/images/gallery-5.jpg', 4)">
+            <div class="w-full h-full relative">
+                <img src="./nhungnhung/public/images/gallery-5.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                    <i class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ảnh 6 -->
+        <div class="reveal-on-scroll delay-600 relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2" onclick="openLightbox('./nhungnhung/public/images/gallery-6.jpg', 5)">
+            <div class="w-full h-full relative">
+                <img src="./nhungnhung/public/images/gallery-6.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                    <div class="absolute top-4 right-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                        <i class="ph-fill ph-heart text-5xl text-white/50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </section>
 
@@ -341,7 +468,7 @@
                 </div>
                 <div class="flex gap-6 items-center my-8">
                    <div class="bg-white p-2 rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                      <img id="bankQR" src="./public/images/qr-bank-giang.jpg" class="w-28 h-28 object-contain" />
+                      <img id="bankQR" src="./nhungnhung/public/images/qr-bank-giang.jpg" class="w-28 h-28 object-contain" />
                    </div>
                    <div class="flex-1">
                       <p class="text-[10px] text-white/70 uppercase tracking-widest mb-1">Ngân hàng</p>
@@ -384,15 +511,25 @@
 
   <!-- FOOTER -->
   <footer class="bg-slate-800 text-white py-12 text-center">
-    <h2 class="font-script text-5xl mb-4">Chú rể & Cô dâu</h2>
+    <h2 class="font-script text-5xl mb-4">Chú rể & Nhung Nhung</h2>
     <p class="text-white/80 font-serif italic mb-6">Sự hiện diện của Quý khách<br/>Là niềm vinh hạnh cho gia đình chúng tôi</p>
     <p class="text-gray-400 text-xs">© 2026 Wedding Invitation</p>
   </footer>
 
-  <!-- LIGHTBOX (Ẩn mặc định) -->
+<!-- LIGHTBOX -->
   <div id="lightbox" class="fixed inset-0 z-[60] bg-black/90 hidden items-center justify-center p-4" onclick="closeLightbox()">
     <button class="absolute top-4 right-4 text-white hover:text-rose-400 z-[70]"><i class="ph-bold ph-x text-3xl"></i></button>
-    <img id="lightboxImg" src="" alt="Full size" class="max-w-full max-h-[90vh] object-contain rounded shadow-2xl" onclick="event.stopPropagation()" />
+    
+    <!-- Nút điều hướng -->
+    <button onclick="event.stopPropagation(); navigateGallery('prev')" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
+        <i class="ph-bold ph-caret-left text-3xl"></i>
+    </button>
+    
+    <img id="lightboxImg" src="" alt="Full size" class="max-w-full max-h-[90vh] object-contain rounded shadow-2xl transition-all duration-300" onclick="event.stopPropagation()" />
+    
+    <button onclick="event.stopPropagation(); navigateGallery('next')" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
+        <i class="ph-bold ph-caret-right text-3xl"></i>
+    </button>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
@@ -404,8 +541,8 @@
     
     // Config Data
     const BANK_INFO = {
-      groom: { name: "Chú rể", bank: "Ngân hàng", number: "00000000", qr: "./public/images/qr-bank-giang.jpg", role: "Mừng Chú Rể" },
-      bride: { name: "Cô dâu", bank: "Ngân hàng", number: "000000", qr: "./public/images/qr-bank-tuyet.jpg", role: "Mừng Cô Dâu" }
+      groom: { name: "Chú rể", bank: "Ngân hàng", number: "00000000", qr: "./nhungnhung/public/images/qr-bank-giang.jpg", role: "Mừng Chú Rể" },
+      bride: { name: "Nhung Nhung", bank: "Ngân hàng", number: "000000", qr: "./nhungnhung/public/images/qr-bank-tuyet.jpg", role: "Mừng Cô Dâu" }
     };
 
     // DOM Elements
@@ -560,19 +697,53 @@
       document.body.removeChild(link);
     }
 
-    // --- 6. LIGHTBOX (Xem ảnh phóng to) ---
+    
+// --- 6. LIGHTBOX CẢI TIẾN (Có chuyển ảnh) ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
+    let currentImageIndex = 0;
+    
+    // Danh sách ảnh trong album
+    const GALLERY_IMAGES = [
+      "./nhungnhung/public/images/gallery-1.jpg",
+      "./nhungnhung/public/images/gallery-2.jpg",
+      "./nhungnhung/public/images/gallery-3.jpg",
+      "./nhungnhung/public/images/gallery-4.jpg",
+      "./nhungnhung/public/images/gallery-5.jpg",
+      "./nhungnhung/public/images/gallery-6.jpg"
+    ];
 
-    function openLightbox(src) {
+    // Cập nhật hàm openLightbox để hỗ trợ vị trí ảnh
+    function openLightbox(src, index = -1) {
+      if (index !== -1) {
+        currentImageIndex = index;
+      } else {
+        // Tìm index nếu click từ bên ngoài album (ví dụ ảnh cô dâu/chú rể)
+        currentImageIndex = GALLERY_IMAGES.indexOf(src);
+      }
+      
       lightboxImg.src = src;
       lightbox.classList.remove('hidden');
       lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden'; // Khóa cuộn khi xem ảnh
     }
 
     function closeLightbox() {
       lightbox.classList.add('hidden');
       lightbox.classList.remove('flex');
+      if (isOpen) document.body.style.overflow = 'unset';
+    }
+
+    // Thêm chức năng chuyển ảnh bằng phím mũi tên hoặc nút (tùy chọn)
+    function navigateGallery(direction) {
+      if (currentImageIndex === -1) return;
+      
+      if (direction === 'next') {
+        currentImageIndex = (currentImageIndex + 1) % GALLERY_IMAGES.length;
+      } else {
+        currentImageIndex = (currentImageIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+      }
+      lightboxImg.src = GALLERY_IMAGES[currentImageIndex];
     }
   </script>
 </body>
