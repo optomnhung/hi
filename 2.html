@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chú rể ❤️ Cô dâu</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* Bộ Font Bản Quyền */
+        @font-face { font-family: "BlackMango"; src: url("https://statics.pancake.vn/web-media/f5/f1/41/aa/b6a0dd0c2a8cc07c0be70e066410a2cb9506e4ae9a3d88a8e238b53c.otf"); font-display: swap; }
+        @font-face { font-family: "Ephesis"; src: url("https://statics.pancake.vn/web-media/65/48/68/4f/ca5a0c732f276b6fef504eddf0e2d6cdf65cf198b0440dde6d90c5a8.ttf"); font-display: swap; }
+        @font-face { font-family: "UTMAzkia"; src: url("https://statics.pancake.vn/web-media/35/7a/ab/a5/2bcc8b3414fa20782f68d8d552b13313f2a24e5b267a97b3cf3a5ec3.ttf"); font-display: swap; }
+
+        body { font-family: 'Arial', sans-serif; background-color: #f0f2f5; color: #333; overflow-x: hidden; }
+        .font-mango { font-family: "BlackMango", sans-serif; }
+        .font-ephesis { font-family: "Ephesis", cursive; }
+        .font-azkia { font-family: "UTMAzkia", cursive; }
+
+        /* Mobile App Wrapper */
+        .app-wrapper {
+            max-width: 430px; margin: 0 auto; background: #fffcfc;
+            min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.15);
+            background-image: url('./public/images/gate-texture.jpg');
+        }
+
+        /* Glassmorphism Premium */
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 32px rgba(0,0,0,0.05); }
+
+        /* Animation Loading */
+        #preloader { position: fixed; inset: 0; background: #fffcfc; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .heart-beat { font-size: 50px; color: #e11d48; animation: beat 1s infinite alternate; }
+        @keyframes beat { to { transform: scale(1.2); } }
+
+        /* Đĩa nhạc xoay */
+        .music-player { animation: spin 4s linear infinite; animation-play-state: paused; }
+        .music-player.playing { animation-play-state: running; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Hiệu ứng cánh hoa */
+        #particles { position: absolute; inset: 0; pointer-events: none; z-index: 10; overflow: hidden; }
+        .petal { position: absolute; background: #fda4af; border-radius: 15px 0 15px 0; opacity: 0.6; animation: falling linear infinite; }
+        @keyframes falling {
+            0% { transform: translate(0, -10vh) rotate(0deg); }
+            100% { transform: translate(20px, 100vh) rotate(360deg); }
+        }
+
+        /* Ẩn thanh cuộn */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* Menu Bottom Bar */
+        .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <i class="fas fa-heart heart-beat drop-shadow-lg"></i>
+        <p class="font-mango tracking-[5px] mt-4 text-gray-500 text-sm">LOADING...</p>
+    </div>
+
+    <div class="app-wrapper pb-12">
+        
+        <div class="fixed top-5 right-5 z-50 lg:right-[calc(50%-190px)]">
+            <button id="btn-music" class="bg-white/90 backdrop-blur p-1.5 rounded-full shadow-xl border border-rose-200 focus:outline-none">
+                <img id="music-icon" src="./public/images/Anh-gif-mo-thiep.jpg" class="w-10 h-10 rounded-full music-player" alt="Music">
+            </button>
+            <audio id="audio-bg" loop>
+                <source src="./public/music/wedding-song.mp3" type="audio/mp3">
+            </audio>
+        </div>
+
+        <section id="home" class="relative w-full h-[85vh] min-h-[600px] flex flex-col justify-between overflow-hidden">
+            <img src="./public/chibi-chu-re-ring.png" class="absolute inset-0 w-full h-full object-cover z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-white z-0"></div>
+            <div id="particles"></div> <div class="relative z-20 pt-16 text-center px-6" data-aos="zoom-in" data-aos-duration="1500">
+                <p class="font-mango text-xs tracking-[5px] text-white drop-shadow-md mb-2 uppercase">Save the date</p>
+                <h1 class="font-ephesis text-[55px] text-white drop-shadow-lg leading-tight">Chú rể<br>& Cô dâu</h1>
+            </div>
+
+            <div class="relative z-20 px-6 pb-12" data-aos="fade-up" data-aos-delay="500">
+                <div class="glass-panel rounded-[30px] p-6 text-center">
+                    <p class="font-mango text-rose-800 text-xl tracking-[3px] mb-4 border-b border-rose-200/50 pb-3">21 . 12 . 2026</p>
+                    <div class="flex justify-center gap-4 text-rose-900">
+                        <div class="flex flex-col items-center">
+                            <span id="day" class="text-3xl font-bold font-mango">00</span>
+                            <span class="text-[10px] uppercase tracking-widest mt-1">Ngày</span>
+                        </div>
+                        <span class="text-2xl mt-1">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="hour" class="text-3xl font-bold font-mango">00</span>
+                            <span class="text-[10px] uppercase tracking-widest mt-1">Giờ</span>
+                        </div>
+                        <span class="text-2xl mt-1">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="minute" class="text-3xl font-bold font-mango">00</span>
+                            <span class="text-[10px] uppercase tracking-widest mt-1">Phút</span>
+                        </div>
+                        <span class="text-2xl mt-1">:</span>
+                        <div class="flex flex-col items-center text-rose-500">
+                            <span id="second" class="text-3xl font-bold font-mango">00</span>
+                            <span class="text-[10px] uppercase tracking-widest mt-1">Giây</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="couple" class="py-16 px-6 bg-white relative">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-azkia text-[40px] text-rose-800 mb-4">Trân trọng kính mời</h2>
+                <div class="w-10 h-1 bg-rose-200 mx-auto mb-6"></div>
+                <p class="text-[14px] text-gray-600 font-serif italic px-4 leading-relaxed">
+                    "Đến dự bữa cơm thân mật, cùng chung vui và chúc phúc cho tình yêu của chúng mình."
+                </p>
+            </div>
+
+            <div class="relative w-full h-[500px]">
+                <div class="absolute left-0 top-0 w-[65%] glass-panel p-2 rounded-xl shadow-lg transform -rotate-3 z-10 hover:z-30 hover:rotate-0 transition-all duration-300" data-aos="fade-right">
+                    <img src="./public/chibi-codau.png" class="w-full aspect-[4/5] object-cover rounded-lg">
+                    <div class="p-3 text-center">
+                        <p class="font-ephesis text-3xl text-rose-700">Cô dâu</p>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-400 mt-1">The Bride</p>
+                    </div>
+                </div>
+                <div class="absolute right-0 top-20 w-[65%] glass-panel p-2 rounded-xl shadow-2xl transform rotate-3 z-20 hover:z-30 hover:rotate-0 transition-all duration-300" data-aos="fade-left">
+                    <img src="./public/chibi-chu-re.png" class="w-full aspect-[4/5] object-cover rounded-lg">
+                    <div class="p-3 text-center">
+                        <p class="font-ephesis text-3xl text-blue-900">Chú rể</p>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-400 mt-1">The Groom</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="event" class="py-16 px-6 bg-rose-50/50">
+            <div class="text-center mb-10" data-aos="zoom-in">
+                <h2 class="font-mango text-[24px] tracking-[4px] text-rose-800">WEDDING EVENT</h2>
+                <p class="font-ephesis text-3xl text-gray-500 mt-2">Lịch trình ngày cưới</p>
+            </div>
+
+            <div class="bg-white rounded-[30px] p-8 shadow-xl border border-rose-100" data-aos="fade-up">
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <div class="w-12 h-[1px] bg-rose-300"></div>
+                    <img src="./public/images/gate-texture.jpg" class="h-6 opacity-60">
+                    <div class="w-12 h-[1px] bg-rose-300"></div>
+                </div>
+
+                <div class="space-y-6 text-center">
+                    <h3 class="font-bold text-xl text-gray-800 tracking-wide uppercase">Tiệc Cưới Nhà Gái</h3>
+                    <p class="text-rose-600 font-bold text-lg font-mango">Thứ .., 21.12.2026</p>
+                    
+                    <ul class="text-gray-600 font-serif space-y-4 my-6">
+                        <li class="flex items-center justify-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500"><i class="fas fa-heart"></i></span>
+                            <b>10:00 AM</b> - Đón khách
+                        </li>
+                        <li class="flex items-center justify-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500"><i class="fas fa-ring"></i></span>
+                            <b>11:00 AM</b> - Làm lễ
+                        </li>
+                        <li class="flex items-center justify-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500"><i class="fas fa-utensils"></i></span>
+                            <b>11:30 AM</b> - Dùng tiệc
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="font-bold text-sm">TẠI GIA ĐÌNH</p>
+                        <p class="text-xs text-gray-500 mt-1">Địa chỉ...</p>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-6">
+                        <a href="https://goo.gl/maps/..." target="_blank" class="w-full py-4 bg-slate-800 text-white rounded-xl font-bold tracking-[2px] text-sm shadow-lg hover:bg-slate-700 active:scale-95 transition">
+                            <i class="fas fa-map-marker-alt mr-2"></i> MỞ GOOGLE MAPS
+                        </a>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Lễ+Cưới+Minh+Nghĩa+%26+Ánh+Dương&dates=20241221T030000Z/20241221T070000Z" target="_blank" class="w-full py-4 bg-white border-2 border-slate-800 text-slate-800 rounded-xl font-bold tracking-[2px] text-sm hover:bg-slate-50 active:scale-95 transition">
+                            <i class="far fa-calendar-check mr-2"></i> THÊM VÀO LỊCH
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white text-center">
+            <h2 class="font-ephesis text-[45px] text-rose-800 mb-8" data-aos="fade-down">Our Memories</h2>
+            
+            <div class="grid grid-cols-2 gap-2 px-4">
+                <img src="./public/images/gallery-1.jpg" onclick="openImage(this.src)" class="w-full aspect-square object-cover rounded-tl-3xl rounded-br-3xl shadow-md cursor-pointer hover:opacity-80 transition" data-aos="zoom-in">
+                <img src="./public/images/gallery-2.jpg" onclick="openImage(this.src)" class="w-full aspect-square object-cover rounded-tr-3xl rounded-bl-3xl shadow-md cursor-pointer hover:opacity-80 transition" data-aos="zoom-in" data-aos-delay="100">
+                <img src="./public/images/gallery-3.jpg" onclick="openImage(this.src)" class="w-full aspect-square object-cover rounded-bl-3xl rounded-tr-3xl shadow-md cursor-pointer hover:opacity-80 transition" data-aos="zoom-in" data-aos-delay="200">
+                <img src="./public/images/gallery-4.jpg" onclick="openImage(this.src)" class="w-full aspect-square object-cover rounded-br-3xl rounded-tl-3xl shadow-md cursor-pointer hover:opacity-80 transition" data-aos="zoom-in" data-aos-delay="300">
+            </div>
+        </section>
+
+        <section id="gift" class="py-16 px-6 bg-rose-50/50">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="font-azkia text-[40px] text-rose-800">Gửi Quà Cưới</h2>
+                <p class="text-xs text-gray-500 mt-2 font-serif italic">Món quà nhỏ, tình cảm lớn...</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-white rounded-3xl p-5 shadow-lg border border-rose-50 flex items-center gap-4" data-aos="fade-right">
+                    <img src="https://img.vietqr.io/image/MB-12345678910-compact2.png" alt="QR Trai" class="w-24 h-24 rounded-xl border p-1 border-gray-100 object-cover cursor-pointer" onclick="openImage(this.src)">
+                    <div class="flex-1">
+                        <p class="text-[11px] uppercase tracking-widest text-blue-600 font-bold mb-1">Đến Chú Rể</p>
+                        <p class="font-bold text-gray-800">Chú rể</p>
+                        <p class="font-mono text-sm text-gray-600 my-1">000000000</p>
+                        <p class="text-[10px] text-gray-400 mb-2">Ngân Hàng MB Bank</p>
+                        <button onclick="copyToClipboard('12345678910')" class="bg-blue-50 text-blue-700 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase active:scale-90 transition">
+                            <i class="far fa-copy mr-1"></i> Copy STK
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-5 shadow-lg border border-rose-50 flex items-center gap-4" data-aos="fade-left">
+                    <img src="https://img.vietqr.io/image/VCB-0987654321-compact2.png" alt="QR Gái" class="w-24 h-24 rounded-xl border p-1 border-gray-100 object-cover cursor-pointer" onclick="openImage(this.src)">
+                    <div class="flex-1">
+                        <p class="text-[11px] uppercase tracking-widest text-rose-600 font-bold mb-1">Đến Cô Dâu</p>
+                        <p class="font-bold text-gray-800">Cô dâu</p>
+                        <p class="font-mono text-sm text-gray-600 my-1">0000000</p>
+                        <p class="text-[10px] text-gray-400 mb-2">Ngân Hàng Vietcombank</p>
+                        <button onclick="copyToClipboard('0987654321')" class="bg-rose-50 text-rose-700 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase active:scale-90 transition">
+                            <i class="far fa-copy mr-1"></i> Copy STK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp" class="py-20 px-6 bg-white relative overflow-hidden">
+            <i class="fas fa-envelope-open-text absolute top-10 right-[-20px] text-[150px] text-gray-50 opacity-50 rotate-12"></i>
+            
+            <div class="relative z-10 glass-panel rounded-[40px] p-8 shadow-2xl border-t border-white" data-aos="zoom-in">
+                <h2 class="font-mango text-[20px] tracking-[3px] text-center text-rose-800 mb-8">Xác nhận tham dự</h2>
+                
+                <form id="rsvp-form" class="space-y-4">
+                    <input type="text" id="gName" placeholder="Tên của bạn là gì?" required 
+                           class="w-full bg-gray-50 border border-gray-100 text-gray-800 text-sm rounded-2xl focus:ring-2 focus:ring-rose-300 outline-none p-4">
+                    
+                    <select id="gType" class="w-full bg-gray-50 border border-gray-100 text-gray-800 text-sm rounded-2xl focus:ring-2 focus:ring-rose-300 outline-none p-4 appearance-none">
+                        <option value="" disabled selected>Bạn là khách của...</option>
+                        <option value="Chú Rể">Nhà Trai (Khách Chú Rể)</option>
+                        <option value="Cô Dâu">Nhà Gái (Khách Cô Dâu)</option>
+                    </select>
+
+                    <textarea id="gMsg" placeholder="Gửi vài lời chúc ngọt ngào nhé..." rows="3" 
+                              class="w-full bg-gray-50 border border-gray-100 text-gray-800 text-sm rounded-2xl focus:ring-2 focus:ring-rose-300 outline-none p-4"></textarea>
+                    
+                    <button type="submit" class="w-full text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 font-bold rounded-2xl text-sm px-5 py-4 text-center tracking-[2px] shadow-lg shadow-rose-200 active:scale-95 transition-transform">
+                        XÁC NHẬN THAM DỰ
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="py-12 bg-gray-900 text-center text-white">
+            <h2 class="font-ephesis text-[50px] text-rose-200 leading-none">Thank You</h2>
+            <p class="font-mango text-[10px] tracking-[4px] mt-2 opacity-60">See you at our wedding</p>
+        </footer>
+
+    </div>
+
+    <div class="fixed bottom-0 left-0 w-full z-50 flex justify-center bottom-nav">
+        <div class="w-full max-w-[430px] bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] flex justify-around items-center py-3 px-2 rounded-t-3xl">
+            <a href="#home" class="flex flex-col items-center text-gray-400 hover:text-rose-600 transition">
+                <i class="fas fa-home text-lg mb-1"></i><span class="text-[9px] font-bold uppercase tracking-wider">Home</span>
+            </a>
+            <a href="#couple" class="flex flex-col items-center text-gray-400 hover:text-rose-600 transition">
+                <i class="fas fa-heart text-lg mb-1"></i><span class="text-[9px] font-bold uppercase tracking-wider">Couple</span>
+            </a>
+            <a href="#event" class="flex flex-col items-center text-gray-400 hover:text-rose-600 transition">
+                <i class="fas fa-calendar-alt text-lg mb-1"></i><span class="text-[9px] font-bold uppercase tracking-wider">Event</span>
+            </a>
+            <a href="#gift" class="flex flex-col items-center text-gray-400 hover:text-rose-600 transition">
+                <i class="fas fa-gift text-lg mb-1"></i><span class="text-[9px] font-bold uppercase tracking-wider">Gift</span>
+            </a>
+            <a href="#rsvp" class="flex flex-col items-center text-rose-500 hover:text-rose-700 transition">
+                <i class="fas fa-envelope-open-text text-lg mb-1"></i><span class="text-[9px] font-bold uppercase tracking-wider">RSVP</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1. Tắt màn hình chờ sau 1.5s
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 1000);
+        });
+
+        // 2. Khởi tạo Animation AOS
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // 3. Đếm ngược thời gian (Countdown)
+        const targetDate = new Date("Dec 21, 2026 10:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance < 0) return;
+            document.getElementById("day").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById("hour").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById("minute").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById("second").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+        }, 1000);
+
+        // 4. Tạo cánh hoa rơi mượt mà
+        const particleContainer = document.getElementById('particles');
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.width = Math.random() * 10 + 10 + 'px';
+            petal.style.height = petal.style.width;
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = Math.random() * 3 + 4 + 's'; // Rơi từ 4-7s
+            particleContainer.appendChild(petal);
+            setTimeout(() => petal.remove(), 7000);
+        }
+        setInterval(createPetal, 400); // 0.4s tạo 1 cánh hoa
+
+        // 5. Trình phát nhạc
+        const audio = document.getElementById('audio-bg');
+        const btnMusic = document.getElementById('btn-music');
+        const iconMusic = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        const playMusic = () => {
+            if(isPlaying) {
+                audio.pause();
+                iconMusic.classList.remove('playing');
+            } else {
+                audio.play();
+                iconMusic.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        }
+        btnMusic.addEventListener('click', playMusic);
+        document.body.addEventListener('touchstart', function initAudio() {
+            if(!isPlaying) playMusic();
+            document.body.removeEventListener('touchstart', initAudio);
+        }, {once: true});
+
+        // 6. Xem ảnh toàn màn hình (Pop-up SweetAlert siêu đẹp)
+        function openImage(src) {
+            Swal.fire({
+                imageUrl: src,
+                imageAlt: 'Wedding Photo',
+                showConfirmButton: false,
+                showCloseButton: true,
+                background: 'transparent',
+                backdrop: `rgba(0,0,0,0.9)`
+            });
+        }
+
+        // 7. Copy STK với SweetAlert
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã copy số tài khoản!',
+                    text: text,
+                    timer: 2000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top'
+                });
+            });
+        }
+
+        // 8. Luồng submit Form chuẩn SPA (Sẵn sàng gắn API)
+        document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('gName').value;
+            const type = document.getElementById('gType').value;
+            
+            // Ở đây bạn có thể dùng fetch() đẩy dữ liệu lên Firebase Firestore để xử lý realtime
+            // ...
+            
+            Swal.fire({
+                title: 'Gửi thành công!',
+                html: `Cảm ơn <b>${name}</b> đã gửi lời chúc đến dâu rể!`,
+                icon: 'success',
+                confirmButtonColor: '#e11d48',
+                confirmButtonText: 'Đóng'
+            });
+            this.reset();
+        });
+    </script>
+</body>
+</html>
