@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thiệp Cưới | Nhung Nhung & ...</title>
+  <title>Thiệp Cưới | Nhung Nhung & Chú rể</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -107,7 +107,6 @@
   }
 
   /* Tạo nhiều cánh hoa với kích thước và độ trễ khác nhau */
-  /* Sử dụng pseudo-elements để tạo 10 cánh hoa mà không cần thêm HTML */
   #petal-container .petal:nth-child(1) { width: 15px; height: 20px; left: 10%; animation-duration: 10s; animation-delay: 0s; }
   #petal-container .petal:nth-child(2) { width: 10px; height: 15px; left: 20%; animation-duration: 12s; animation-delay: 2s; background-color: #fff0f5; }
   #petal-container .petal:nth-child(3) { width: 18px; height: 25px; left: 35%; animation-duration: 8s; animation-delay: 4s; }
@@ -121,8 +120,8 @@
   </style>
 </head>
 <body class="font-serif text-gray-800 relative">
-       <!-- /* Hiệu ứng cánh hoa rơi (Falling Petals) */ -->
-<div id="petal-container">
+  <!-- Hiệu ứng cánh hoa rơi -->
+  <div id="petal-container">
     <div class="petal"></div>
     <div class="petal"></div>
     <div class="petal"></div>
@@ -167,7 +166,7 @@
         <div class="absolute inset-0 border-4 border-double border-rose-200 rounded-full m-2 animate-spin-slow"></div>
         <div class="z-10 text-center flex flex-col items-center gap-2">
           <div class="w-24 h-24">
-             <img src="./public/images/Anh-gif-mo-thiep.jpg"  alt="Mở thiệp" class="w-full h-full object-contain" />
+             <img src="./public/images/Anh-gif-mo-thiep.jpg" alt="Mở thiệp" class="w-full h-full object-contain" />
           </div>
           <p class="font-script text-3xl text-rose-500 mt-2 group-hover:text-rose-600 transition-colors">Mở thiệp</p>
         </div>
@@ -373,16 +372,25 @@
     </div>
   </section>
 
-  <!-- GALLERY (MAGAZINE LAYOUT) -->
-  <section class="bg-white">
-    <div class="reveal-on-scroll text-center py-20 bg-[#FDFBF7]">
+  <!-- GALLERY SECTION (CÓ NÚT MỞ ALBUM) -->
+  <section class="bg-[#FDFBF7] pb-20">
+    <div class="reveal-on-scroll text-center py-20">
       <h2 class="font-script text-6xl text-rose-500 mb-2">Album Hình Cưới</h2>
       <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Khoảnh khắc hạnh phúc</p>
     </div>
     
-    <div id="weddingGallery" class="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[400px] gap-0 w-full">
+    <!-- Nút mở Album -->
+    <div id="albumControlBtn" class="flex justify-center mb-8 reveal-on-scroll">
+      <button onclick="toggleWeddingAlbum()" class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-sans font-medium text-base shadow-lg transition-all duration-300 flex items-center gap-2 hover:scale-105">
+        <i class="ph-bold ph-images text-xl"></i>
+        <span>Mở Album Ảnh</span>
+      </button>
+    </div>
+
+    <!-- Lưới ảnh ban đầu ẩn bằng lớp 'hidden' -->
+    <div id="weddingGallery" class="hidden grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[400px] gap-0 w-full opacity-0 transition-opacity duration-700">
         <!-- Ảnh 1 (Lớn) -->
-        <div class="reveal-on-scroll delay-100 relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2 md:row-span-2" onclick="openLightbox('./public/images/gallery-1.jpg', 0)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2 md:row-span-2" onclick="openLightbox('./public/images/gallery-1.jpg', 0)">
           <div class="w-full h-full relative">
             <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
@@ -394,7 +402,7 @@
         </div>
 
         <!-- Ảnh 2 -->
-        <div class="reveal-on-scroll delay-200 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-2.jpg', 1)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-2.jpg', 1)">
           <div class="w-full h-full relative">
             <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
@@ -404,17 +412,17 @@
         </div>
 
         <!-- Ảnh 3 -->
-        <div class="reveal-on-scroll delay-300 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-3.jpg', 2)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-3.jpg', 2)">
           <img src="./public/images/gallery-3.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
         </div>
 
         <!-- Ảnh 4 -->
-        <div class="reveal-on-scroll delay-400 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-4.jpg', 3)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-4.jpg', 3)">
           <img src="./public/images/gallery-4.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
         </div>
 
         <!-- Ảnh 5 -->
-        <div class="reveal-on-scroll delay-500 relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-5.jpg', 4)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-5.jpg', 4)">
             <div class="w-full h-full relative">
                 <img src="./public/images/gallery-5.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
@@ -424,7 +432,7 @@
         </div>
 
         <!-- Ảnh 6 -->
-        <div class="reveal-on-scroll delay-600 relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2" onclick="openLightbox('./public/images/gallery-6.jpg', 5)">
+        <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2" onclick="openLightbox('./public/images/gallery-6.jpg', 5)">
             <div class="w-full h-full relative">
                 <img src="./public/images/gallery-6.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
@@ -516,7 +524,7 @@
     <p class="text-gray-400 text-xs">© 2026 Wedding Invitation</p>
   </footer>
 
-<!-- LIGHTBOX -->
+  <!-- LIGHTBOX -->
   <div id="lightbox" class="fixed inset-0 z-[60] bg-black/90 hidden items-center justify-center p-4" onclick="closeLightbox()">
     <button class="absolute top-4 right-4 text-white hover:text-rose-400 z-[70]"><i class="ph-bold ph-x text-3xl"></i></button>
     
@@ -697,13 +705,12 @@
       document.body.removeChild(link);
     }
 
-    
-// --- 6. LIGHTBOX CẢI TIẾN (Có chuyển ảnh) ---
+    // --- 6. XỬ LÝ ALBUM ẨN/HIỆN & LIGHTBOX XEM TỪNG ẢNH ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     let currentImageIndex = 0;
     
-    // Danh sách ảnh trong album
+    // Danh sách ảnh trong album cưới
     const GALLERY_IMAGES = [
       "./public/images/gallery-1.jpg",
       "./public/images/gallery-2.jpg",
@@ -713,19 +720,49 @@
       "./public/images/gallery-6.jpg"
     ];
 
-    // Cập nhật hàm openLightbox để hỗ trợ vị trí ảnh
+    // Hàm ẩn hiện Album khi ấn nút
+    function toggleWeddingAlbum() {
+      const gallery = document.getElementById('weddingGallery');
+      const btnText = document.querySelector('#albumControlBtn span');
+      const btnIcon = document.querySelector('#albumControlBtn i');
+
+      if (gallery.classList.contains('hidden')) {
+        // Hiện album ảnh
+        gallery.classList.remove('hidden');
+        gallery.classList.add('grid');
+        setTimeout(() => {
+          gallery.classList.remove('opacity-0');
+          gallery.classList.add('opacity-100');
+        }, 50);
+        btnText.innerText = "Đóng Album Ảnh";
+        btnIcon.className = "ph-bold ph-x text-xl";
+        
+        // Tự động bật xem ảnh từ tấm đầu tiên
+        openLightbox(GALLERY_IMAGES[0], 0);
+      } else {
+        // Ẩn album ảnh
+        gallery.classList.add('opacity-0');
+        gallery.classList.remove('opacity-100');
+        setTimeout(() => {
+          gallery.classList.remove('grid');
+          gallery.classList.add('hidden');
+        }, 700);
+        btnText.innerText = "Mở Album Ảnh";
+        btnIcon.className = "ph-bold ph-images text-xl";
+      }
+    }
+
     function openLightbox(src, index = -1) {
       if (index !== -1) {
         currentImageIndex = index;
       } else {
-        // Tìm index nếu click từ bên ngoài album (ví dụ ảnh cô dâu/chú rể)
         currentImageIndex = GALLERY_IMAGES.indexOf(src);
       }
       
       lightboxImg.src = src;
       lightbox.classList.remove('hidden');
       lightbox.classList.add('flex');
-      document.body.style.overflow = 'hidden'; // Khóa cuộn khi xem ảnh
+      document.body.style.overflow = 'hidden'; // Khóa cuộn trang chính khi đang xem lightbox
     }
 
     function closeLightbox() {
@@ -734,7 +771,7 @@
       if (isOpen) document.body.style.overflow = 'unset';
     }
 
-    // Thêm chức năng chuyển ảnh bằng phím mũi tên hoặc nút (tùy chọn)
+    // Hàm chuyển đổi ảnh Trướct/Sau
     function navigateGallery(direction) {
       if (currentImageIndex === -1) return;
       
@@ -745,6 +782,15 @@
       }
       lightboxImg.src = GALLERY_IMAGES[currentImageIndex];
     }
+
+    // Hỗ trợ chuyển ảnh nhanh bằng phím mũi tên Trái/Phải bàn phím
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'ArrowRight') navigateGallery('next');
+        if (e.key === 'ArrowLeft') navigateGallery('prev');
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
   </script>
 </body>
 </html>
