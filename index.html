@@ -1,138 +1,251 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thiệp Cưới | Cẩm Nhung & Trọng Hoàng</title>
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            script: ['"Pinyon Script"', 'cursive'],
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['"Montserrat"', 'sans-serif'],
-          },
-          animation: {
-            'spin-slow': 'spin 10s linear infinite',
-            'slide-up-fast': 'slideUpFast 0.3s ease-out forwards',
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Cưới | Cẩm Nhung & Trọng Hoàng</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        script: ['"Pinyon Script"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'slide-up-fast': 'slideUpFast 0.3s ease-out forwards',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Phosphor Icons (Dùng thay thế cho lucide-react) -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <style>
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #FDFBF7; }
-    ::-webkit-scrollbar-thumb { background: #E11D48; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #BE123C; }
-    
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #FDFBF7;
-      overflow-x: hidden;
-      overflow-y: hidden; /* Khóa cuộn lúc đầu */
-      height: 100vh;
-    }
+    <!-- Phosphor Icons (Dùng thay thế cho lucide-react) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    /* Hiệu ứng trượt lên khi cuộn */
-    .reveal-on-scroll { 
-      opacity: 0; 
-      transform: translateY(80px) scale(0.9); 
-      filter: blur(8px);
-      transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .fade-up-active { 
-      opacity: 1; 
-      transform: translateY(0) scale(1); 
-      filter: blur(0);
-    }
+    <!-- Custom CSS -->
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-    @keyframes slideUpFast {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
 
-    .gate-panel { transition: transform 2s cubic-bezier(0.4, 0.0, 0.2, 1); }
+        ::-webkit-scrollbar-thumb {
+            background: #E11D48;
+            border-radius: 4px;
+        }
 
-    /* Hiệu ứng cánh hoa rơi (Falling Petals) */
-  #petal-container {
-    position: fixed; /* Giữ cố định trên toàn bộ màn hình */
-    top: -50px; /* Bắt đầu từ phía trên màn hình một chút */
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 50; /* Đảm bảo cánh hoa rơi trên các lớp khác nhưng dưới Lightbox */
-    overflow: hidden; /* Không hiện thanh cuộn */
-    pointer-events: none; /* Cánh hoa không ảnh hưởng đến việc click */
-  }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #BE123C;
+        }
 
-  .petal {
-    position: absolute;
-    background-color: #ffc0cb; /* Màu hồng nhẹ cho cánh hoa */
-    border-radius: 150% 0 150% 100%; /* Tạo hình dáng cánh hoa */
-    opacity: 0.8;
-    filter: blur(0.5px); /* Làm mờ một chút cho mềm mại */
-    animation: fall linear infinite; /* Sử dụng hoạt ảnh tên là 'fall' */
-  }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FDFBF7;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            /* Khóa cuộn lúc đầu */
+            height: 100vh;
+        }
 
-  /* Định nghĩa hoạt ảnh 'fall' */
-  @keyframes fall {
-    0% {
-      transform: translateY(0vh) translateX(0px) rotate(0deg);
-      opacity: 0;
-    }
-    10% {
-      opacity: 1; /* Cánh hoa hiện rõ hơn sau khi bắt đầu rơi */
-    }
-    100% {
-      /* Cánh hoa rơi xuống cuối màn hình, sang trái và xoay */
-      transform: translateY(105vh) translateX(-200px) rotate(720deg);
-      opacity: 0;
-    }
-  }
+        /* Hiệu ứng trượt lên khi cuộn */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(80px) scale(0.9);
+            filter: blur(8px);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-  /* Tạo nhiều cánh hoa với kích thước và độ trễ khác nhau */
-  #petal-container .petal:nth-child(1) { width: 15px; height: 20px; left: 10%; animation-duration: 10s; animation-delay: 0s; }
-  #petal-container .petal:nth-child(2) { width: 10px; height: 15px; left: 20%; animation-duration: 12s; animation-delay: 2s; background-color: #fff0f5; }
-  #petal-container .petal:nth-child(3) { width: 18px; height: 25px; left: 35%; animation-duration: 8s; animation-delay: 4s; }
-  #petal-container .petal:nth-child(4) { width: 12px; height: 18px; left: 50%; animation-duration: 15s; animation-delay: 1s; background-color: #fff; }
-  #petal-container .petal:nth-child(5) { width: 20px; height: 28px; left: 65%; animation-duration: 9s; animation-delay: 6s; }
-  #petal-container .petal:nth-child(6) { width: 15px; height: 20px; left: 80%; animation-duration: 11s; animation-delay: 3s; background-color: #ffc0cb; }
-  #petal-container .petal:nth-child(7) { width: 10px; height: 15px; left: 90%; animation-duration: 14s; animation-delay: 5s; }
-  #petal-container .petal:nth-child(8) { width: 18px; height: 25px; left: 5%; animation-duration: 10s; animation-delay: 7s; background-color: #fff0f5; }
-  #petal-container .petal:nth-child(9) { width: 12px; height: 18px; left: 25%; animation-duration: 13s; animation-delay: 2s; }
-  #petal-container .petal:nth-child(10) { width: 20px; height: 28px; left: 75%; animation-duration: 8s; animation-delay: 0s; background-color: #fff; }
-  </style>
+        .fade-up-active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        @keyframes slideUpFast {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gate-panel {
+            transition: transform 2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        /* Hiệu ứng cánh hoa rơi (Falling Petals) */
+        #petal-container {
+            position: fixed;
+            /* Giữ cố định trên toàn bộ màn hình */
+            top: -50px;
+            /* Bắt đầu từ phía trên màn hình một chút */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            /* Đảm bảo cánh hoa rơi trên các lớp khác nhưng dưới Lightbox */
+            overflow: hidden;
+            /* Không hiện thanh cuộn */
+            pointer-events: none;
+            /* Cánh hoa không ảnh hưởng đến việc click */
+        }
+
+        .petal {
+            position: absolute;
+            background-color: #ffc0cb;
+            /* Màu hồng nhẹ cho cánh hoa */
+            border-radius: 150% 0 150% 100%;
+            /* Tạo hình dáng cánh hoa */
+            opacity: 0.8;
+            filter: blur(0.5px);
+            /* Làm mờ một chút cho mềm mại */
+            animation: fall linear infinite;
+            /* Sử dụng hoạt ảnh tên là 'fall' */
+        }
+
+        /* Định nghĩa hoạt ảnh 'fall' */
+        @keyframes fall {
+            0% {
+                transform: translateY(0vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                /* Cánh hoa hiện rõ hơn sau khi bắt đầu rơi */
+            }
+
+            100% {
+                /* Cánh hoa rơi xuống cuối màn hình, sang trái và xoay */
+                transform: translateY(105vh) translateX(-200px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Tạo nhiều cánh hoa với kích thước và độ trễ khác nhau */
+        #petal-container .petal:nth-child(1) {
+            width: 15px;
+            height: 20px;
+            left: 10%;
+            animation-duration: 10s;
+            animation-delay: 0s;
+        }
+
+        #petal-container .petal:nth-child(2) {
+            width: 10px;
+            height: 15px;
+            left: 20%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+            background-color: #fff0f5;
+        }
+
+        #petal-container .petal:nth-child(3) {
+            width: 18px;
+            height: 25px;
+            left: 35%;
+            animation-duration: 8s;
+            animation-delay: 4s;
+        }
+
+        #petal-container .petal:nth-child(4) {
+            width: 12px;
+            height: 18px;
+            left: 50%;
+            animation-duration: 15s;
+            animation-delay: 1s;
+            background-color: #fff;
+        }
+
+        #petal-container .petal:nth-child(5) {
+            width: 20px;
+            height: 28px;
+            left: 65%;
+            animation-duration: 9s;
+            animation-delay: 6s;
+        }
+
+        #petal-container .petal:nth-child(6) {
+            width: 15px;
+            height: 20px;
+            left: 80%;
+            animation-duration: 11s;
+            animation-delay: 3s;
+            background-color: #ffc0cb;
+        }
+
+        #petal-container .petal:nth-child(7) {
+            width: 10px;
+            height: 15px;
+            left: 90%;
+            animation-duration: 14s;
+            animation-delay: 5s;
+        }
+
+        #petal-container .petal:nth-child(8) {
+            width: 18px;
+            height: 25px;
+            left: 5%;
+            animation-duration: 10s;
+            animation-delay: 7s;
+            background-color: #fff0f5;
+        }
+
+        #petal-container .petal:nth-child(9) {
+            width: 12px;
+            height: 18px;
+            left: 25%;
+            animation-duration: 13s;
+            animation-delay: 2s;
+        }
+
+        #petal-container .petal:nth-child(10) {
+            width: 20px;
+            height: 28px;
+            left: 75%;
+            animation-duration: 8s;
+            animation-delay: 0s;
+            background-color: #fff;
+        }
+    </style>
 </head>
+
 <body class="font-serif text-gray-800 relative">
-  <!-- Hiệu ứng cánh hoa rơi -->
-  <div id="petal-container">
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-  </div>
+    <!-- Hiệu ứng cánh hoa rơi -->
+    <div id="petal-container">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+    </div>
 
     <!-- Nhạc nền mặc định của thiệp -->
     <audio id="bgMusic" src="./public/music/wedding-song.mp3" loop></audio>
@@ -140,772 +253,894 @@
     <!-- THÊM THẺ NÀY: Nhạc riêng khi xem Album Ảnh (Thay link bài hát tùy ý) -->
     <audio id="albumMusic" src="./public/music/wes.mp3" loop></audio>
 
-  <!-- Floating Music Button -->
-  <div id="musicBtnWrap" class="fixed bottom-6 left-6 z-40 transition-all duration-1000 opacity-0 translate-y-20">
-    <button onclick="toggleMusic()" class="w-12 h-12 rounded-full bg-rose-400 text-white shadow-lg flex items-center justify-center hover:bg-rose-600 transition-colors">
-      <i id="musicIcon" class="ph-fill ph-music-notes text-xl animate-spin-slow"></i>
-    </button>
-  </div>
+    <!-- Floating Music Button -->
+    <div id="musicBtnWrap" class="fixed bottom-6 left-6 z-40 transition-all duration-1000 opacity-0 translate-y-20">
+        <button onclick="toggleMusic()"
+            class="w-12 h-12 rounded-full bg-rose-400 text-white shadow-lg flex items-center justify-center hover:bg-rose-600 transition-colors">
+            <i id="musicIcon" class="ph-fill ph-music-notes text-xl animate-spin-slow"></i>
+        </button>
+    </div>
 
-  <!-- Floating Scroll To Top Button -->
-  <div id="scrollTopWrap" class="fixed bottom-20 left-6 z-40 transition-all duration-500 opacity-0 translate-y-10 pointer-events-none">
-    <button onclick="scrollToTop()" class="w-12 h-12 rounded-full bg-slate-700 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 transition-colors pointer-events-auto">
-      <i class="ph-bold ph-arrow-up text-xl"></i>
-    </button>
-  </div>
+    <!-- Floating Scroll To Top Button -->
+    <div id="scrollTopWrap"
+        class="fixed bottom-20 left-6 z-40 transition-all duration-500 opacity-0 translate-y-10 pointer-events-none">
+        <button onclick="scrollToTop()"
+            class="w-12 h-12 rounded-full bg-slate-700 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 transition-colors pointer-events-auto">
+            <i class="ph-bold ph-arrow-up text-xl"></i>
+        </button>
+    </div>
 
-  <!-- GATE OPENER -->
-  <div id="gateOverlay" class="fixed inset-0 z-50 pointer-events-none flex visible">
-    <div id="gateLeft" class="w-1/2 h-full bg-[#FAF7F2] relative border-r border-rose-100 gate-panel pointer-events-auto flex items-center justify-end translate-x-0">
-      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./public/images/gate-texture.jpg')"></div>
-    </div>
-    <div id="gateRight" class="w-1/2 h-full bg-[#FAF7F2] relative border-l border-rose-100 gate-panel pointer-events-auto flex items-center justify-start translate-x-0">
-      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('./public/images/gate-texture.jpg')"></div>
-    </div>
-    
-    <!-- Nút Mở Thiệp -->
-    <div id="centerBtn" class="absolute inset-0 flex items-center justify-center pointer-events-auto transition-all duration-700 opacity-100 scale-100">
-      <button onclick="handleOpen()" class="w-64 h-64 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center group relative overflow-hidden border-4 border-rose-100 cursor-pointer hover:scale-105 transition-transform">
-        <div class="absolute inset-0 border-4 border-double border-rose-200 rounded-full m-2 animate-spin-slow"></div>
-        <div class="z-10 text-center flex flex-col items-center gap-2">
-          <div class="w-24 h-24">
-             <img src="./public/images/Anh-gif-mo-thiep.jpg" alt="Mở thiệp" class="w-full h-full object-contain" />
-          </div>
-          <p class="font-script text-3xl text-rose-500 mt-2 group-hover:text-rose-600 transition-colors">Mở thiệp</p>
+    <!-- GATE OPENER -->
+    <div id="gateOverlay" class="fixed inset-0 z-50 pointer-events-none flex visible">
+        <div id="gateLeft"
+            class="w-1/2 h-full bg-[#FAF7F2] relative border-r border-rose-100 gate-panel pointer-events-auto flex items-center justify-end translate-x-0">
+            <div class="absolute inset-0 bg-cover bg-center opacity-80"
+                style="background-image: url('./public/images/gate-texture.jpg')"></div>
         </div>
-      </button>
-    </div>
-  </div>
+        <div id="gateRight"
+            class="w-1/2 h-full bg-[#FAF7F2] relative border-l border-rose-100 gate-panel pointer-events-auto flex items-center justify-start translate-x-0">
+            <div class="absolute inset-0 bg-cover bg-center opacity-80"
+                style="background-image: url('./public/images/gate-texture.jpg')"></div>
+        </div>
 
-  <!-- HERO -->
-  <section class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
-    <div class="absolute inset-0 z-0">
-      <div class="absolute inset-0 bg-black/40 z-10"></div>
-      <img src="./public/images/anh-nen.jpg" alt="Background" class="w-full h-full object-cover object-top blur-[2px]" />
-    </div>
-    <div class="relative z-10 text-white px-4">
-      <div class="reveal-on-scroll delay-0">
-        <p class="font-sans text-sm md:text-lg tracking-[0.3em] uppercase mb-4 text-rose-100">Save The Date</p>
-        <h1 class="font-script text-7xl md:text-9xl mb-2 text-rose-50">Trọng Hoàng</h1>
-        <span class="font-script text-5xl md:text-7xl text-rose-200">&</span>
-        <h1 class="font-script text-7xl md:text-9xl mt-2 mb-8 text-rose-50">Cẩm Nhung</h1>
-        <div class="w-24 h-1 bg-rose-400 mx-auto mb-8"></div>
-        <p class="font-serif text-xl md:text-2xl italic tracking-wide">02 tháng 08 năm 2026</p>
-      </div>
-    </div>
-    <i class="ph-bold ph-caret-down absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce text-white/80 text-3xl"></i>
-  </section>
-
-  <!-- CÔ DÂU CHÚ RỂ -->
-  <section class="bg-[#FDFBF7]">
-    <div class="reveal-on-scroll delay-100 text-center pt-20 pb-12 px-4">
-      <h2 class="font-script text-6xl text-rose-500 mb-4">Cô Dâu & Chú Rể</h2>
-    </div>
-    <div class="reveal-on-scroll delay-200 w-full relative">
-        <div class="flex w-full h-[60vh] md:h-[80vh] relative">
-           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden border-r-[1px] border-white/20" onclick="openLightbox('./public/images/chu-re.jpg')">
-             <img src="./public/images/chu-re.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
-             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity"></div>
-             <div class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-               <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Trọng Hoàng</h3>
-               <p class="text-rose-200 text-sm md:text-lg uppercase tracking-[0.3em] font-medium">Chú Rể</p>
-             </div>
-             <div class="absolute top-6 left-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100"><i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
-           </div>
-           <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden" onclick="openLightbox('./public/images/co-dau.jpg')">
-             <img src="./public/images/co-dau.jpg" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
-             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity"></div>
-             <div class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-               <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Nhung Nhung</h3>
-               <p class="text-rose-200 text-sm md:text-lg uppercase tracking-[0.3em] font-medium">Cô Dâu</p>
-             </div>
-             <div class="absolute top-6 right-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100"><i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
-           </div>
-           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-              <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse ring-4 ring-rose-100/50">
-                <i class="ph-fill ph-heart text-rose-500 text-3xl"></i>
-              </div>
-           </div>
-        </div>
-    </div>
-    
-    <!-- INVITATION CARD -->
-    <div class="reveal-on-scroll delay-300 container mx-auto px-4 max-w-2xl -mt-10 relative z-30">
-      <div class="bg-[#F7F3E8] p-6 md:p-8 rounded-xl border-[2px] border-dashed border-gray-400 shadow-2xl">
-        <div class="flex flex-row justify-between items-start mb-8 text-sm md:text-base">
-          <div class="w-1/2 pr-2 md:pr-4 text-center border-r border-gray-400">
-            <h4 class="font-script font-bold text-3xl text-slate-700 mb-2">Nhà Trai</h4>
-            <p class="font-serif font-bold">Bố: LÊ TRỌNG NGỌ</p>
-            <p class="font-serif font-bold mb-2">Mẹ: NGUYỄN THỊ HÒA</p>
-            <p class="font-sans text-xs text-slate-600">Xóm Đồng Phong<br/>Xã Vạn An<br/>Tỉnh Nghệ An</p>
-          </div>
-          <div class="w-1/2 pl-2 md:pl-4 text-center">
-            <h4 class="font-script font-bold text-3xl text-slate-700 mb-2">Nhà Gái</h4>
-            <p class="font-serif font-bold">Bố: TRƯƠNG VIẾT NUÔI</p>
-            <p class="font-serif font-bold mb-2">Mẹ: LÊ THỊ TƯƠNG</p>
-            <p class="font-sans text-xs text-slate-600">Số 7 - Ngõ 1 Đường Nguyễn Thiếp<br/>Thôn 5 - Xã Thạnh Hà - Tỉnh Hà Tĩnh</p>
-          </div>
-        </div>
-        <div class="text-center mb-6">
-          <h3 class="font-sans font-bold uppercase text-slate-500 tracking-wider text-sm md:text-base mb-2">Trân Trọng Kính Mời</h3>
-          <p class="underline underline-offset-4 decoration-rose-300 decoration-1 mb-4 font-serif italic text-slate-600">Bạn + người thương</p>
-          <p class="font-sans text-xs md:text-sm uppercase text-slate-600 tracking-wide leading-relaxed">Tới dự bữa cơm thân mật và chung vui cùng gia đình mình</p>
-        </div>
-        <div class="text-center mb-8">
-          <h2 class="font-script text-5xl md:text-6xl text-rose-500 mb-2">Trọng Hoàng</h2>
-          <i class="ph-fill ph-heart text-rose-400 animate-pulse text-xl mx-2"></i>
-          <h2 class="font-script text-5xl md:text-6xl text-rose-500 mt-2">Cẩm Nhung</h2>
-        </div>
-        <div class="text-center mb-2">
-          <p class="font-sans text-gray-600 uppercase text-sm mb-2 font-bold tracking-widest">Được tổ chức vào hồi</p>
-          <p class="font-bold text-xl mb-4 text-slate-700">10 GIỜ 30</p>
-          <div class="flex items-center justify-center gap-4 text-slate-700 font-serif">
-            <div class="border-t border-b border-gray-400 py-1 w-24 text-center font-bold uppercase tracking-wider">Thứ Năm</div>
-            <div class="text-6xl md:text-7xl font-serif text-rose-600 font-bold leading-none">...</div>
-            <div class="border-t border-b border-gray-400 py-1 w-24 text-center font-bold tracking-wider">30.07.2026</div>
-          </div>
-        </div>
-        <div class="text-center mb-8"><p class="font-serif italic text-slate-500">( Tức ngày 17 tháng 06 năm Bính Ngọ )</p></div>
-        <div class="text-center mb-8">
-          <p class="font-bold uppercase text-slate-700 mb-1">Tại: Nhà Ông Nuôi - Bà Trương</p>
-          <p class="text-slate-600 font-serif">Số 7 - ngõ 1 Đường Nguyễn Thiếp<br/>Thôn 5 - Xã Thạch Hà - Tỉnh Hà Tĩnh</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-          <button onclick="scrollToSection('gift-section')" class="bg-rose-500 text-white px-6 py-3 rounded-md font-sans text-sm font-medium hover:bg-rose-600 transition-colors shadow-md w-full sm:w-auto">Mừng cưới</button>
-          <button onclick="scrollToSection('countdown-section')" class="bg-slate-600 text-white px-6 py-3 rounded-md font-sans text-sm font-medium hover:bg-slate-700 transition-colors shadow-md w-full sm:w-auto">Xem tất cả sự kiện</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STORY & EVENTS -->
-  <section id="countdown-section" class="py-20 bg-cover bg-center bg-fixed relative" style="background-image: url('./public/images/countdown-bg.jpg')">
-    <div class="absolute inset-0 bg-white/90"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="reveal-on-scroll delay-0 text-center mb-16">
-        <h2 class="font-script text-7xl text-slate-700 mb-4">Lễ Thành Hôn</h2>
-        
-        <!-- Đồng hồ đếm ngược -->
-        <div class="flex gap-4 md:gap-8 justify-center">
-            <div class="flex flex-col items-center">
-              <div class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
-                <span id="cd-days" class="text-2xl md:text-3xl font-bold font-serif">00</span>
-              </div>
-              <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Ngày</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
-                  <span id="cd-hours" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+        <!-- Nút Mở Thiệp -->
+        <div id="centerBtn"
+            class="absolute inset-0 flex items-center justify-center pointer-events-auto transition-all duration-700 opacity-100 scale-100">
+            <button onclick="handleOpen()"
+                class="w-64 h-64 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center group relative overflow-hidden border-4 border-rose-100 cursor-pointer hover:scale-105 transition-transform">
+                <div class="absolute inset-0 border-4 border-double border-rose-200 rounded-full m-2 animate-spin-slow">
                 </div>
-                <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Giờ</span>
-              </div>
-              <div class="flex flex-col items-center">
-                <div class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
-                  <span id="cd-minutes" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+                <div class="z-10 text-center flex flex-col items-center gap-2">
+                    <div class="w-24 h-24">
+                        <img src="./public/images/Anh-gif-mo-thiep.jpg" alt="Mở thiệp"
+                            class="w-full h-full object-contain" />
+                    </div>
+                    <p class="font-script text-3xl text-rose-500 mt-2 group-hover:text-rose-600 transition-colors">Mở
+                        thiệp</p>
                 </div>
-                <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Phút</span>
-              </div>
-              <div class="flex flex-col items-center">
-                <div class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
-                  <span id="cd-seconds" class="text-2xl md:text-3xl font-bold font-serif">00</span>
-                </div>
-                <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Giây</span>
-              </div>
+            </button>
         </div>
-        <p class="mt-8 font-serif italic text-slate-600 text-xl">Được tổ chức vào Chủ Nhật</p>
-      </div>
-
-      <div class="mt-16 flex justify-center">
-         <div class="max-w-4xl w-full">
-            <!-- Event 1 -->
-            <div class="reveal-on-scroll delay-100 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
-                <!-- Đổi pr-24 thành pr-4 trên mobile để chữ tự xuống dòng rộng rãi, lên md mới dùng pr-64 -->
-                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
-                   <h3 class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">Bữa Cơm Thân Mật</h3>
-                   <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
-                   <div class="space-y-4 w-2/3 md:w-full">
-                       <div class="flex items-start gap-4">
-                           <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
-                           <div>
-                               <p class="font-semibold text-lg">10:30</p>
-                               <p class="text-sm text-gray-300 italic whitespace-normal break-words">Thứ Năm, 30/07/2026<br class="md:hidden"/> (17/06 Âm lịch)</p>
-                           </div>
-                       </div>
-                        <div class="flex items-start gap-4">
-                            <i class="ph-bold ph-map-pin text-gray-300 mt-1 text-xl flex-shrink-0"></i>
-                           <div>
-                               <p class="font-semibold text-lg">Tư gia Nhà Gái</p>
-                               <p class="text-sm text-gray-300 leading-relaxed">Số 7 - Ngõ 1 - Đường Nguyễn Thiếp - Thôn 5 - Xã Thạnh Hà - Tỉnh Hà Tĩnh</p>
-                               <a href="https://maps.app.goo.gl/ZtnaomPm3Wzo56eq6" class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem bản đồ</a>
-                           </div>
-                       </div>
-                   </div>
-                </div>
-                <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile để không đè lên chữ -->
-                <div class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
-                   <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover" />
-                </div>
-             </div>
-
-             <!-- Event 2 -->
-             <div class="reveal-on-scroll delay-300 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
-                <!-- Đổi pr-24 thành pr-4 trên mobile -->
-                <div class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
-                   <h3 class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">Lễ Thành Hôn</h3>
-                   <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
-                   <div class="space-y-4 w-2/3 md:w-full">
-                       <div class="flex items-start gap-4">
-                           <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
-                           <div>
-                               <p class="font-semibold text-lg">11:00</p>
-                               <p class="text-sm text-gray-300 italic whitespace-normal break-words">Chủ Nhật, 02/08/2026<br class="md:hidden"/> (20/06 Âm lịch)</p>
-                           </div>
-                       </div>
-                        <div class="flex items-start gap-4">
-                            <i class="ph-bold ph-map-pin text-gray-300 mt-1 text-xl flex-shrink-0"></i>
-                           <div>
-                               <p class="font-semibold text-lg">Tư gia Nhà Trai</p>
-                               <p class="text-sm text-gray-300 leading-relaxed">Xóm Đồng Phong - Xã Vạn An - Tỉnh Nghệ An</p>
-                               <a href="#" class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem bản đồ</a>
-                           </div>
-                       </div>
-                   </div>
-                </div>
-                <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile -->
-                <div class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
-                   <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover" />
-                </div>
-             </div>
-         </div>
-      </div>
-      
-    </div>
-  </section>
-
-  <!-- GALLERY SECTION (CÓ NÚT MỞ ALBUM) -->
-  <section class="bg-[#FDFBF7] pb-20">
-    <div class="reveal-on-scroll text-center py-20">
-      <h2 class="font-script text-6xl text-rose-500 mb-2">Album Hình Cưới</h2>
-      <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Khoảnh khắc hạnh phúc</p>
-    </div>
-    
-    <!-- Nút mở Album -->
-    <div id="albumControlBtn" class="flex justify-center mb-8 reveal-on-scroll">
-      <button onclick="toggleWeddingAlbum()" class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-sans font-medium text-base shadow-lg transition-all duration-300 flex items-center gap-2 hover:scale-105">
-        <i class="ph-bold ph-images text-xl"></i>
-        <span>Mở Album Ảnh</span>
-      </button>
     </div>
 
-    <!-- Lưới ảnh ban đầu ẩn bằng lớp 'hidden' -->
-    <div id="weddingGallery" class="hidden grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[400px] gap-0 w-full opacity-0 transition-opacity duration-700">
-        <!-- Ảnh 1 (Lớn) -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2 md:row-span-2" onclick="openLightbox('./public/images/gallery-1.jpg', 0)">
-          <div class="w-full h-full relative">
-            <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
-              <div class="absolute bottom-4 left-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
-                <h3 class="font-script text-5xl drop-shadow-md">Forever</h3>
-              </div>
-            </div>
-          </div>
+    <!-- HERO -->
+    <section class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <img src="./public/images/anh-nen.jpg" alt="Background"
+                class="w-full h-full object-cover object-top blur-[2px]" />
         </div>
-
-        <!-- Ảnh 2 -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-2.jpg', 1)">
-          <div class="w-full h-full relative">
-            <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
-                <i class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ảnh 3 -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-3.jpg', 2)">
-          <img src="./public/images/gallery-3.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-        </div>
-
-        <!-- Ảnh 4 -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1" onclick="openLightbox('./public/images/gallery-4.jpg', 3)">
-          <img src="./public/images/gallery-4.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-        </div>
-
-        <!-- Ảnh 5 -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2" onclick="openLightbox('./public/images/gallery-5.jpg', 4)">
-            <div class="w-full h-full relative">
-                <img src="./public/images/gallery-5.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
-                    <i class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                </div>
+        <div class="relative z-10 text-white px-4">
+            <div class="reveal-on-scroll delay-0">
+                <p class="font-sans text-sm md:text-lg tracking-[0.3em] uppercase mb-4 text-rose-100">Save The Date</p>
+                <h1 class="font-script text-6xl md:text-9xl mb-2 text-rose-50">Trọng Hoàng</h1>
+                <span class="font-script text-5xl md:text-7xl text-rose-200">&</span>
+                <h1 class="font-script text-6xl md:text-9xl mt-2 mb-8 text-rose-50">Cẩm Nhung</h1>
+                <div class="w-24 h-1 bg-rose-400 mx-auto mb-8"></div>
+                <p class="font-serif text-xl md:text-2xl italic tracking-wide">02 tháng 08 năm 2026</p>
             </div>
         </div>
+        <i
+            class="ph-bold ph-caret-down absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce text-white/80 text-3xl"></i>
+    </section>
 
-        <!-- Ảnh 6 -->
-        <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2" onclick="openLightbox('./public/images/gallery-6.jpg', 5)">
-            <div class="w-full h-full relative">
-                <img src="./public/images/gallery-6.jpg" class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
-                    <div class="absolute top-4 right-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
-                        <i class="ph-fill ph-heart text-5xl text-white/50"></i>
+    <!-- CÔ DÂU CHÚ RỂ -->
+    <section class="bg-[#FDFBF7]">
+        <div class="reveal-on-scroll delay-100 text-center pt-20 pb-12 px-4">
+            <h2 class="font-script text-5xl text-rose-500 mb-4">Cô Dâu & Chú Rể</h2>
+        </div>
+        <div class="reveal-on-scroll delay-200 w-full relative">
+            <div class="flex w-full h-[60vh] md:h-[80vh] relative">
+                <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden border-r-[1px] border-white/20"
+                    onclick="openLightbox('./public/images/chu-re.jpg')">
+                    <img src="./public/images/chu-re.jpg"
+                        class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                        <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Trọng Hoàng</h3>
+                        <p class="text-rose-200 text-sm md:text-lg uppercase tracking-[0.3em] font-medium">Chú Rể</p>
+                    </div>
+                    <div
+                        class="absolute top-6 left-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100">
+                        <i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
+                </div>
+                <div class="w-1/2 h-full relative group cursor-pointer overflow-hidden"
+                    onclick="openLightbox('./public/images/co-dau.jpg')">
+                    <img src="./public/images/co-dau.jpg"
+                        class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute bottom-10 md:bottom-20 left-0 right-0 text-center text-white p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                        <h3 class="font-script text-5xl md:text-7xl mb-2 drop-shadow-lg">Cẩm Nhung</h3>
+                        <p class="text-rose-200 text-sm md:text-lg uppercase tracking-[0.3em] font-medium">Cô Dâu</p>
+                    </div>
+                    <div
+                        class="absolute top-6 right-6 bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100">
+                        <i class="ph-bold ph-magnifying-glass-plus text-white text-xl"></i></div>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                    <div
+                        class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse ring-4 ring-rose-100/50">
+                        <i class="ph-fill ph-heart text-rose-500 text-3xl"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-  </section>
 
-  <!-- GIFT BOX SECTION -->
-  <section id="gift-section" class="py-24 bg-white relative overflow-hidden">
-    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#e11d48_1px,transparent_1px)] [background-size:24px_24px]"></div>
-    <div class="container mx-auto px-4 relative z-10">
-       <div class="reveal-on-scroll text-center mb-16">
-          <i class="ph-fill ph-gift text-rose-500 text-5xl mx-auto mb-4 animate-bounce inline-block"></i>
-          <h2 class="font-script text-7xl text-slate-700 mb-4">Hộp Mừng Cưới</h2>
-          <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Gửi tặng món quà yêu thương</p>
-       </div>
-
-       <div class="max-w-md mx-auto">
-          <div class="flex w-full"> 
-             <button id="tabGroom" onclick="switchTab('groom')" class="flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-blue-600 text-white z-10">Mừng Chú Rể</button>
-             <button id="tabBride" onclick="switchTab('bride')" class="flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0">Mừng Cô Dâu</button>
-          </div>
-
-          <div id="giftCardWrap" class="relative overflow-hidden rounded-b-2xl rounded-tr-2xl shadow-2xl transition-colors duration-500 bg-blue-600">
-             <div id="giftCardBg" class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 z-0"></div>
-             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/10 z-0 blur-2xl"></div>
-             <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-white/5 z-0 blur-2xl"></div>
-             
-             <div class="relative z-10 p-8 text-white h-full flex flex-col justify-between min-h-[320px] animate-slide-up-fast">
-                <div class="flex justify-between items-start">
-                   <div>
-                      <p id="bankRole" class="text-white/80 text-xs font-bold tracking-widest uppercase mb-1">Mừng Chú Rể</p>
-                      <h3 id="bankName" class="font-script text-4xl font-bold tracking-wide">Trọng Hoàng</h3>
-                   </div>
-                   <i class="ph-fill ph-credit-card text-white/30 text-5xl"></i>
+        <!-- INVITATION CARD -->
+        <div class="reveal-on-scroll delay-300 container mx-auto px-4 max-w-2xl -mt-10 relative z-30">
+            <div class="bg-[#F7F3E8] p-6 md:p-8 rounded-xl border-[2px] border-dashed border-gray-400 shadow-2xl">
+                <div class="flex flex-row justify-between items-start mb-8 text-sm md:text-base">
+                    <div class="w-1/2 pr-2 md:pr-4 text-center border-r border-gray-400">
+                        <h4 class="font-script font-bold text-3xl text-slate-700 mb-2">Nhà Trai</h4>
+                        <p class="font-serif font-bold">Bố: LÊ TRỌNG NGỌ</p>
+                        <p class="font-serif font-bold mb-2">Mẹ: NGUYỄN THỊ HÒA</p>
+                        <p class="font-sans text-xs text-slate-600">Xóm Đồng Phong<br />Xã Vạn An<br />Tỉnh Nghệ An</p>
+                    </div>
+                    <div class="w-1/2 pl-2 md:pl-4 text-center">
+                        <h4 class="font-script font-bold text-3xl text-slate-700 mb-2">Nhà Gái</h4>
+                        <p class="font-serif font-bold">Bố: TRƯƠNG VIẾT NUÔI</p>
+                        <p class="font-serif font-bold mb-2">Mẹ: LÊ THỊ TƯƠNG</p>
+                        <p class="font-sans text-xs text-slate-600">Số 7 - Ngõ 1 Đường Nguyễn Thiếp<br />Thôn 5 - Xã
+                            Thạnh Hà - Tỉnh Hà Tĩnh</p>
+                    </div>
                 </div>
-                <div class="flex gap-6 items-center my-8">
-                   <div class="bg-white p-2 rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                      <img id="bankQR" src="./public/images/qr-bank-giang.jpg" class="w-28 h-28 object-contain" />
-                   </div>
-                   <div class="flex-1">
-                      <p class="text-[10px] text-white/70 uppercase tracking-widest mb-1">Ngân hàng</p>
-                      <p id="bankBank" class="font-bold text-lg mb-4 tracking-wide">Ngân hàng</p>
-                      <p class="text-[10px] text-white/70 uppercase tracking-widest mb-1">Số tài khoản</p>
-                      <p id="bankNumber" class="font-mono text-2xl font-bold tracking-widest drop-shadow-md">00000000</p>
-                   </div>
+                <div class="text-center mb-6">
+                    <h3 class="font-sans font-bold uppercase text-slate-500 tracking-wider text-sm md:text-base mb-2">
+                        Trân Trọng Kính Mời</h3>
+                    <p
+                        class="underline underline-offset-4 decoration-rose-300 decoration-1 mb-4 font-serif italic text-slate-600">
+                        Bạn + người thương</p>
+                    <p class="font-sans text-xs md:text-sm uppercase text-slate-600 tracking-wide leading-relaxed">Tới
+                        dự bữa cơm thân mật và chung vui cùng gia đình mình</p>
                 </div>
-                <div class="flex gap-3 mt-auto">
-                   <button onclick="copyAccount()" class="flex-1 bg-white/20 hover:bg-white/30 backdrop-blur-md py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 group-hover:scale-[1.02]"><i class="ph-bold ph-copy"></i> Sao chép</button>
-                   <button onclick="downloadQR()" class="flex-1 bg-black/20 hover:bg-black/40 backdrop-blur-md py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 group-hover:scale-[1.02]"><i class="ph-bold ph-download-simple"></i> Tải mã QR</button>
+                <div class="text-center mb-8">
+                    <h2 class="font-script text-5xl md:text-6xl text-rose-500 mb-2">Trọng Hoàng</h2>
+                    <i class="ph-fill ph-heart text-rose-400 animate-pulse text-xl mx-2"></i>
+                    <h2 class="font-script text-5xl md:text-6xl text-rose-500 mt-2">Cẩm Nhung</h2>
                 </div>
-             </div>
-          </div>
-       </div>
+                <div class="text-center mb-2">
+                    <p class="font-sans text-gray-600 uppercase text-sm mb-2 font-bold tracking-widest">Được tổ chức vào
+                        hồi</p>
+                    <p class="font-bold text-xl mb-4 text-slate-700">10 GIỜ 30</p>
+                    <div class="flex items-center justify-center gap-4 text-slate-700 font-serif">
+                        <div
+                            class="border-t border-b border-gray-400 py-1 w-24 text-center font-bold uppercase tracking-wider">
+                            Thứ Năm</div>
+                        <div class="text-6xl md:text-7xl font-serif text-rose-600 font-bold leading-none">...</div>
+                        <div class="border-t border-b border-gray-400 py-1 w-24 text-center font-bold tracking-wider">
+                            30.07.2026</div>
+                    </div>
+                </div>
+                <div class="text-center mb-8">
+                    <p class="font-serif italic text-slate-500">( Tức ngày 17 tháng 06 năm Bính Ngọ )</p>
+                </div>
+                <div class="text-center mb-8">
+                    <p class="font-bold uppercase text-slate-700 mb-1">Tại: Nhà Ông Nuôi - Bà Trương</p>
+                    <p class="text-slate-600 font-serif">Số 7 - ngõ 1 Đường Nguyễn Thiếp<br />Thôn 5 - Xã Thạch Hà -
+                        Tỉnh Hà Tĩnh</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+                    <button onclick="scrollToSection('gift-section')"
+                        class="bg-rose-500 text-white px-6 py-3 rounded-md font-sans text-sm font-medium hover:bg-rose-600 transition-colors shadow-md w-full sm:w-auto">Mừng
+                        cưới</button>
+                    <button onclick="scrollToSection('countdown-section')"
+                        class="bg-slate-600 text-white px-6 py-3 rounded-md font-sans text-sm font-medium hover:bg-slate-700 transition-colors shadow-md w-full sm:w-auto">Xem
+                        tất cả sự kiện</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY & EVENTS -->
+    <section id="countdown-section" class="py-20 bg-cover bg-center bg-fixed relative"
+        style="background-image: url('./public/images/countdown-bg.jpg')">
+        <div class="absolute inset-0 bg-white/90"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="reveal-on-scroll delay-0 text-center mb-16">
+                <h2 class="font-script text-7xl text-slate-700 mb-4">Lễ Thành Hôn</h2>
+
+                <!-- Đồng hồ đếm ngược -->
+                <div class="flex gap-4 md:gap-8 justify-center">
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
+                            <span id="cd-days" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Ngày</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
+                            <span id="cd-hours" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Giờ</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
+                            <span id="cd-minutes" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Phút</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center mb-2 bg-rose-600 text-white shadow-lg shadow-rose-200 border-2 border-rose-400">
+                            <span id="cd-seconds" class="text-2xl md:text-3xl font-bold font-serif">00</span>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-rose-700 font-bold">Giây</span>
+                    </div>
+                </div>
+                <p class="mt-8 font-serif italic text-slate-600 text-xl">Được tổ chức vào Chủ Nhật</p>
+            </div>
+
+            <div class="mt-16 flex justify-center">
+                <div class="max-w-4xl w-full">
+                    <!-- Event 1 -->
+                    <div class="reveal-on-scroll delay-100 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
+                        <!-- Đổi pr-24 thành pr-4 trên mobile để chữ tự xuống dòng rộng rãi, lên md mới dùng pr-64 -->
+                        <div
+                            class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
+                            <h3
+                                class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">
+                                Bữa Cơm Thân Mật</h3>
+                            <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
+                            <div class="space-y-4 w-2/3 md:w-full">
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold text-lg">10:30</p>
+                                        <p class="text-sm text-gray-300 italic whitespace-normal break-words">Thứ Năm,
+                                            30/07/2026<br class="md:hidden" /> (17/06 Âm lịch)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-map-pin text-gray-300 mt-1 text-xl flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold text-lg">Tư gia Nhà Gái</p>
+                                        <p class="text-sm text-gray-300 leading-relaxed">Số 7 - Ngõ 1 - Đường Nguyễn
+                                            Thiếp - Thôn 5 - Xã Thạnh Hà - Tỉnh Hà Tĩnh</p>
+                                        <a href="https://maps.app.goo.gl/CZjN7Poa2d63L6f68"
+                                            class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem
+                                            bản đồ</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile để không đè lên chữ -->
+                        <div
+                            class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
+                            <img src="./public/images/gallery-1.jpg" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="reveal-on-scroll delay-300 relative mb-28 md:mb-12 last:mb-0 mx-auto group w-full px-4">
+                        <!-- Đổi pr-24 thành pr-4 trên mobile -->
+                        <div
+                            class="bg-slate-600 text-white p-6 md:p-10 rounded-xl pr-4 md:pr-64 shadow-xl relative z-10 w-full md:w-[90%] min-h-[220px] flex flex-col justify-center transform transition-transform duration-500 hover:translate-y-[-5px]">
+                            <h3
+                                class="text-yellow-400 font-script text-4xl md:text-5xl font-bold border-b border-yellow-400/30 inline-block mb-6 pb-2 w-fit">
+                                Lễ Thành Hôn</h3>
+                            <!-- Thêm w-2/3 trên mobile để chữ chủ động né ảnh ra và xuống dòng -->
+                            <div class="space-y-4 w-2/3 md:w-full">
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-clock text-gray-300 mt-1 text-xl flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold text-lg">11:00</p>
+                                        <p class="text-sm text-gray-300 italic whitespace-normal break-words">Chủ Nhật,
+                                            02/08/2026<br class="md:hidden" /> (20/06 Âm lịch)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-map-pin text-gray-300 mt-1 text-xl flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold text-lg">Tư gia Nhà Trai</p>
+                                        <p class="text-sm text-gray-300 leading-relaxed">Xóm Đồng Phong - Xã Vạn An -
+                                            Tỉnh Nghệ An</p>
+                                        <a href="https://maps.app.goo.gl/hdHtYCAZiFn8aaEp8"
+                                            class="text-xs text-yellow-400 hover:text-yellow-300 underline mt-1 inline-block">Xem
+                                            bản đồ</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Giữ nguyên absolute nhưng chỉnh lại vị trí trên mobile -->
+                        <div
+                            class="absolute top-1/2 -translate-y-1/2 right-2 md:right-0 w-28 h-28 md:w-64 md:h-56 rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20 transition-all duration-700 ease-out hover:scale-105 hover:shadow-yellow-400/20">
+                            <img src="./public/images/gallery-2.jpg" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION (CÓ NÚT MỞ ALBUM) -->
+    <section class="bg-[#FDFBF7] pb-20">
+        <div class="reveal-on-scroll text-center py-20">
+            <h2 class="font-script text-6xl text-rose-500 mb-2">Album Hình Cưới</h2>
+            <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Khoảnh khắc hạnh phúc</p>
+        </div>
+
+        <!-- Nút mở Album -->
+        <div id="albumControlBtn" class="flex justify-center mb-8 reveal-on-scroll">
+            <button onclick="toggleWeddingAlbum()"
+                class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-sans font-medium text-base shadow-lg transition-all duration-300 flex items-center gap-2 hover:scale-105">
+                <i class="ph-bold ph-images text-xl"></i>
+                <span>Mở Album Ảnh</span>
+            </button>
+        </div>
+
+        <!-- Lưới ảnh ban đầu ẩn bằng lớp 'hidden' -->
+        <div id="weddingGallery"
+            class="hidden grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[400px] gap-0 w-full opacity-0 transition-opacity duration-700">
+            <!-- Ảnh 1 (Lớn) -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2 md:row-span-2"
+                onclick="openLightbox('./public/images/gallery-1.jpg', 0)">
+                <div class="w-full h-full relative">
+                    <img src="./public/images/gallery-1.jpg"
+                        class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                    <div
+                        class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                        <div
+                            class="absolute bottom-4 left-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                            <h3 class="font-script text-5xl drop-shadow-md">Forever</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ảnh 2 -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2"
+                onclick="openLightbox('./public/images/gallery-2.jpg', 1)">
+                <div class="w-full h-full relative">
+                    <img src="./public/images/gallery-2.jpg"
+                        class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                    <div
+                        class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                        <i
+                            class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ảnh 3 -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1"
+                onclick="openLightbox('./public/images/gallery-3.jpg', 2)">
+                <img src="./public/images/gallery-3.jpg"
+                    class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+            </div>
+
+            <!-- Ảnh 4 -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-1"
+                onclick="openLightbox('./public/images/gallery-4.jpg', 3)">
+                <img src="./public/images/gallery-4.jpg"
+                    class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+            </div>
+
+            <!-- Ảnh 5 -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-1 md:col-span-2"
+                onclick="openLightbox('./public/images/gallery-5.jpg', 4)">
+                <div class="w-full h-full relative">
+                    <img src="./public/images/gallery-5.jpg"
+                        class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                    <div
+                        class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                        <i
+                            class="ph-bold ph-flower text-white/80 text-5xl animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ảnh 6 -->
+            <div class="relative overflow-hidden cursor-pointer group col-span-2 md:col-span-2"
+                onclick="openLightbox('./public/images/gallery-6.jpg', 5)">
+                <div class="w-full h-full relative">
+                    <img src="./public/images/gallery-6.jpg"
+                        class="w-full h-full object-cover bg-slate-100 transition-transform duration-1000 group-hover:scale-105" />
+                    <div
+                        class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                        <div
+                            class="absolute top-4 right-4 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                            <i class="ph-fill ph-heart text-5xl text-white/50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFT BOX SECTION -->
+    <section id="gift-section" class="py-24 bg-white relative overflow-hidden">
+        <div
+            class="absolute inset-0 opacity-20 bg-[radial-gradient(#e11d48_1px,transparent_1px)] [background-size:24px_24px]">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="reveal-on-scroll text-center mb-16">
+                <i class="ph-fill ph-gift text-rose-500 text-5xl mx-auto mb-4 animate-bounce inline-block"></i>
+                <h2 class="font-script text-7xl text-slate-700 mb-4">Hộp Mừng Cưới</h2>
+                <p class="font-sans text-slate-500 uppercase tracking-widest text-sm">Gửi tặng món quà yêu thương</p>
+            </div>
+
+            <div class="max-w-md mx-auto">
+                <div class="flex w-full">
+                    <button id="tabGroom" onclick="switchTab('groom')"
+                        class="flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-blue-600 text-white z-10">Mừng
+                        Chú Rể</button>
+                    <button id="tabBride" onclick="switchTab('bride')"
+                        class="flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0">Mừng
+                        Cô Dâu</button>
+                </div>
+
+                <div id="giftCardWrap"
+                    class="relative overflow-hidden rounded-b-2xl rounded-tr-2xl shadow-2xl transition-colors duration-500 bg-blue-600">
+                    <div id="giftCardBg" class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 z-0"></div>
+                    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/10 z-0 blur-2xl">
+                    </div>
+                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-white/5 z-0 blur-2xl">
+                    </div>
+
+                    <div
+                        class="relative z-10 p-8 text-white h-full flex flex-col justify-between min-h-[320px] animate-slide-up-fast">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p id="bankRole" class="text-white/80 text-xs font-bold tracking-widest uppercase mb-1">
+                                    Mừng Chú Rể</p>
+                                <h3 id="bankName" class="font-script text-4xl font-bold tracking-wide">Trọng Hoàng</h3>
+                            </div>
+                            <i class="ph-fill ph-credit-card text-white/30 text-5xl"></i>
+                        </div>
+                        <div class="flex gap-6 items-center my-8">
+                            <div
+                                class="bg-white p-2 rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                                <img id="bankQR" src="./public/images/qr-bank-giang.jpg"
+                                    class="w-28 h-28 object-contain" />
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[10px] text-white/70 uppercase tracking-widest mb-1">Ngân hàng</p>
+                                <p id="bankBank" class="font-bold text-lg mb-4 tracking-wide">Ngân hàng</p>
+                                <p class="text-[10px] text-white/70 uppercase tracking-widest mb-1">Số tài khoản</p>
+                                <p id="bankNumber" class="font-mono text-2xl font-bold tracking-widest drop-shadow-md">
+                                    00000000</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-auto">
+                            <button onclick="copyAccount()"
+                                class="flex-1 bg-white/20 hover:bg-white/30 backdrop-blur-md py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 group-hover:scale-[1.02]"><i
+                                    class="ph-bold ph-copy"></i> Sao chép</button>
+                            <button onclick="downloadQR()"
+                                class="flex-1 bg-black/20 hover:bg-black/40 backdrop-blur-md py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 group-hover:scale-[1.02]"><i
+                                    class="ph-bold ph-download-simple"></i> Tải mã QR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="py-20 bg-rose-50">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <div class="reveal-on-scroll text-center mb-12">
+                <h2 class="font-script text-6xl text-rose-500 mb-2">Gửi Lời Chúc Phúc</h2>
+                <p class="font-sans text-slate-500 uppercase tracking-widest text-sm mb-8">Sự hiện diện của bạn là niềm
+                    vinh hạnh của chúng tôi</p>
+            </div>
+            <div class="reveal-on-scroll delay-200 bg-white p-8 md:p-12 rounded-2xl shadow-xl">
+                <h3 class="font-serif text-2xl text-center mb-6 text-slate-700">Xác nhận tham dự</h3>
+
+                <!-- Thêm id vào form để bắt sự kiện -->
+                <form id="rsvpForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Tên của bạn</label>
+                        <input type="text" id="name"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition"
+                            placeholder="Nhập tên của bạn" required />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Số người</label>
+                            <select id="guests"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
+                                <option value="1 người">1 người</option>
+                                <option value="2 người">2 người</option>
+                                <option value="Đi cùng gia đình">Đi cùng gia đình</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Tham dự</label>
+                            <select id="attend"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
+                                <option value="Chắc chắn tham dự">Chắc chắn tham dự</option>
+                                <option value="Xin lỗi, mình bận rồi">Xin lỗi, mình bận rồi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Lời chúc</label>
+                        <textarea id="message" rows="3"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition"
+                            placeholder="Gửi lời chúc đến cô dâu chú rể..."></textarea>
+                    </div>
+
+                    <!-- Nút submit tự động đổi trạng thái khi đang gửi -->
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-slate-700 text-white py-4 rounded-lg font-bold hover:bg-slate-800 transition flex justify-center items-center gap-2">
+                        <span>Gửi xác nhận</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-800 text-white py-12 text-center">
+        <h2 class="font-script text-5xl mb-4">Trọng Hoàng & Cẩm Nhung</h2>
+        <p class="text-white/80 font-serif italic mb-6">Sự hiện diện của Quý khách<br />Là niềm vinh hạnh cho gia đình
+            chúng tôi</p>
+        <p class="text-gray-400 text-xs">© 2026 Wedding Invitation</p>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/90 hidden items-center justify-center p-4"
+        onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white hover:text-rose-400 z-[70]"><i
+                class="ph-bold ph-x text-3xl"></i></button>
+
+        <!-- Nút điều hướng -->
+        <button onclick="event.stopPropagation(); navigateGallery('prev')"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
+            <i class="ph-bold ph-caret-left text-3xl"></i>
+        </button>
+
+        <img id="lightboxImg" src="" alt="Full size"
+            class="max-w-full max-h-[90vh] object-contain rounded shadow-2xl transition-all duration-300"
+            onclick="event.stopPropagation()" />
+
+        <button onclick="event.stopPropagation(); navigateGallery('next')"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
+            <i class="ph-bold ph-caret-right text-3xl"></i>
+        </button>
     </div>
-  </section>
 
-<!-- RSVP -->
-  <section class="py-20 bg-rose-50">
-    <div class="container mx-auto px-4 max-w-2xl">
-      <div class="reveal-on-scroll text-center mb-12">
-        <h2 class="font-script text-6xl text-rose-500 mb-2">Gửi Lời Chúc Phúc</h2>
-        <p class="font-sans text-slate-500 uppercase tracking-widest text-sm mb-8">Sự hiện diện của bạn là niềm vinh hạnh của chúng tôi</p>
-      </div>
-      <div class="reveal-on-scroll delay-200 bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-         <h3 class="font-serif text-2xl text-center mb-6 text-slate-700">Xác nhận tham dự</h3>
-         
-         <!-- Thêm id vào form để bắt sự kiện -->
-         <form id="rsvpForm" class="space-y-4">
-           <div>
-              <label class="block text-sm font-medium text-slate-600 mb-1">Tên của bạn</label>
-              <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Nhập tên của bạn" required />
-           </div>
-           
-           <div class="grid grid-cols-2 gap-4">
-             <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Số người</label>
-                <select id="guests" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
-                    <option value="1 người">1 người</option>
-                    <option value="2 người">2 người</option>
-                    <option value="Đi cùng gia đình">Đi cùng gia đình</option>
-                </select>
-             </div>
-             <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Tham dự</label>
-                <select id="attend" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition">
-                    <option value="Chắc chắn tham dự">Chắc chắn tham dự</option>
-                    <option value="Xin lỗi, mình bận rồi">Xin lỗi, mình bận rồi</option>
-                </select>
-             </div>
-           </div>
-           
-           <div>
-              <label class="block text-sm font-medium text-slate-600 mb-1">Lời chúc</label>
-              <textarea id="message" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 outline-none transition" placeholder="Gửi lời chúc đến cô dâu chú rể..."></textarea>
-           </div>
-           
-           <!-- Nút submit tự động đổi trạng thái khi đang gửi -->
-           <button type="submit" id="submitBtn" class="w-full bg-slate-700 text-white py-4 rounded-lg font-bold hover:bg-slate-800 transition flex justify-center items-center gap-2">
-              <span>Gửi xác nhận</span>
-           </button>
-         </form>
-      </div>
-    </div>
-  </section>
+    <!-- Script xử lý gửi dữ liệu lên Google Sheet không load lại trang -->
+    <script>
+        document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-800 text-white py-12 text-center">
-    <h2 class="font-script text-5xl mb-4">Trọng Hoàng & Cẩm Nhung</h2>
-    <p class="text-white/80 font-serif italic mb-6">Sự hiện diện của Quý khách<br/>Là niềm vinh hạnh cho gia đình chúng tôi</p>
-    <p class="text-gray-400 text-xs">© 2026 Wedding Invitation</p>
-  </footer>
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox" class="fixed inset-0 z-[60] bg-black/90 hidden items-center justify-center p-4" onclick="closeLightbox()">
-    <button class="absolute top-4 right-4 text-white hover:text-rose-400 z-[70]"><i class="ph-bold ph-x text-3xl"></i></button>
-    
-    <!-- Nút điều hướng -->
-    <button onclick="event.stopPropagation(); navigateGallery('prev')" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
-        <i class="ph-bold ph-caret-left text-3xl"></i>
-    </button>
-    
-    <img id="lightboxImg" src="" alt="Full size" class="max-w-full max-h-[90vh] object-contain rounded shadow-2xl transition-all duration-300" onclick="event.stopPropagation()" />
-    
-    <button onclick="event.stopPropagation(); navigateGallery('next')" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 rounded-full p-2 transition-all z-[70]">
-        <i class="ph-bold ph-caret-right text-3xl"></i>
-    </button>
-  </div>
+            // HIỆU ỨNG ĐANG GỬI
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Đang gửi...</span>';
 
-  <!-- Script xử lý gửi dữ liệu lên Google Sheet không load lại trang -->
-  <script>
-    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-      e.preventDefault(); 
-      
-      const submitBtn = document.getElementById('submitBtn');
-      const originalText = submitBtn.innerHTML;
-      
-      // HIỆU ỨNG ĐANG GỬI
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Đang gửi...</span>';
+            // Link Web App của bạn
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzJFTY7IBZTer-Q6lKKDPXPNkjXQMuJb6LZalNFdOUmNWCnVGLOw-gnIRbKM_wWAGFRLg/exec';
 
-      // Link Web App của bạn
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbzJFTY7IBZTer-Q6lKKDPXPNkjXQMuJb6LZalNFdOUmNWCnVGLOw-gnIRbKM_wWAGFRLg/exec';
+            // Chuyển dữ liệu sang định dạng URLSearchParams giúp Google API nhận diện tốt hơn
+            const formData = new URLSearchParams();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('guests', document.getElementById('guests').value);
+            formData.append('attend', document.getElementById('attend').value);
+            formData.append('message', document.getElementById('message').value);
 
-      // Chuyển dữ liệu sang định dạng URLSearchParams giúp Google API nhận diện tốt hơn
-      const formData = new URLSearchParams();
-      formData.append('name', document.getElementById('name').value);
-      formData.append('guests', document.getElementById('guests').value);
-      formData.append('attend', document.getElementById('attend').value);
-      formData.append('message', document.getElementById('message').value);
-
-      // Gửi dữ liệu qua phương thức POST thông thường
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors', // no-cors yêu cầu truyền dạng text/form-urlencoded để Apps Script bắt được dữ liệu ngầm
-        body: formData
-      })
-      .then(() => {
-        // XỬ LÝ KHI GỬI THÀNH CÔNG
-        alert('Cảm ơn bạn đã gửi lời chúc phúc!');
-        document.getElementById('rsvpForm').reset(); 
-      })
-      .catch(error => {
-        console.error('Lỗi:', error);
-        alert('Có lỗi xảy ra, vui lòng thử lại sau!');
-      })
-      .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      });
-    });
-  </script>
- 
- <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // --- KHAI BÁO BIẾN TRẠNG THÁI ---
-    let isOpen = false;
-    let isPlaying = false;
-    let currentTab = 'groom';
-    
-    // Config Data
-    const BANK_INFO = {
-      groom: { name: "Trọng Hoàng", bank: "Ngân hàng", number: "00000000", qr: "./public/images/qr-bank-giang.jpg", role: "Mừng Chú Rể" },
-      bride: { name: "Cẩm Nhung", bank: "Ngân hàng", number: "000000", qr: "./public/images/qr-bank-tuyet.jpg", role: "Mừng Cô Dâu" }
-    };
-
-    // DOM Elements
-    const audio = document.getElementById('bgMusic');
-    const musicBtnWrap = document.getElementById('musicBtnWrap');
-    const musicIcon = document.getElementById('musicIcon');
-    const scrollTopWrap = document.getElementById('scrollTopWrap');
-    const gateOverlay = document.getElementById('gateOverlay');
-    const gateLeft = document.getElementById('gateLeft');
-    const gateRight = document.getElementById('gateRight');
-    const centerBtn = document.getElementById('centerBtn');
-
-    // --- 1. MỞ CỔNG THIỆP & KÍCH HOẠT HIỆU ỨNG ---
-    function handleOpen() {
-      isOpen = true;
-      document.body.style.overflow = 'unset';
-      document.body.style.height = 'auto';
-
-      // Ẩn cổng
-      gateOverlay.classList.remove('visible');
-      gateOverlay.classList.add('invisible');
-      gateLeft.classList.add('-translate-x-full');
-      gateRight.classList.add('translate-x-full');
-      centerBtn.classList.remove('opacity-100', 'scale-100');
-      centerBtn.classList.add('opacity-0', 'scale-50');
-
-      // Hiện nút nhạc
-      musicBtnWrap.classList.remove('opacity-0', 'translate-y-20');
-      musicBtnWrap.classList.add('opacity-100', 'translate-y-0');
-
-      // Bật nhạc
-      audio.volume = 0.5;
-      audio.play().then(() => {
-        isPlaying = true;
-        musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
-        musicIcon.classList.add('animate-spin-slow');
-      }).catch(e => console.log("Audio play failed:", e));
-
-      // Kích hoạt scroll reveal observer
-      initScrollReveal();
-    }
-
-    // --- 2. XỬ LÝ NHẠC NỀN ---
-    function toggleMusic() {
-      if (isPlaying) {
-        audio.pause();
-        musicIcon.classList.replace('ph-music-notes', 'ph-speaker-slash');
-        musicIcon.classList.remove('animate-spin-slow');
-      } else {
-        audio.play();
-        musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
-        musicIcon.classList.add('animate-spin-slow');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // --- 3. SCROLL REVEAL (HIỆN KHI CUỘN) & NÚT LÊN ĐẦU TRANG ---
-    function initScrollReveal() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('fade-up-active');
-          }
+            // Gửi dữ liệu qua phương thức POST thông thường
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors', // no-cors yêu cầu truyền dạng text/form-urlencoded để Apps Script bắt được dữ liệu ngầm
+                body: formData
+            })
+                .then(() => {
+                    // XỬ LÝ KHI GỬI THÀNH CÔNG
+                    alert('Cảm ơn bạn đã gửi lời chúc phúc!');
+                    document.getElementById('rsvpForm').reset();
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
         });
-      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    </script>
 
-      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
-    }
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- KHAI BÁO BIẾN TRẠNG THÁI ---
+        let isOpen = false;
+        let isPlaying = false;
+        let currentTab = 'groom';
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300 && isOpen) {
-        scrollTopWrap.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
-        scrollTopWrap.classList.add('opacity-100', 'translate-y-0');
-      } else {
-        scrollTopWrap.classList.remove('opacity-100', 'translate-y-0');
-        scrollTopWrap.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
-      }
-    });
+        // Config Data
+        const BANK_INFO = {
+            groom: { name: "Trọng Hoàng", bank: "Ngân hàng", number: "00000000", qr: "./public/images/qr-bank-giang.jpg", role: "Mừng Chú Rể" },
+            bride: { name: "Cẩm Nhung", bank: "Ngân hàng", number: "000000", qr: "./public/images/qr-bank-tuyet.jpg", role: "Mừng Cô Dâu" }
+        };
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        // DOM Elements
+        const audio = document.getElementById('bgMusic');
+        const musicBtnWrap = document.getElementById('musicBtnWrap');
+        const musicIcon = document.getElementById('musicIcon');
+        const scrollTopWrap = document.getElementById('scrollTopWrap');
+        const gateOverlay = document.getElementById('gateOverlay');
+        const gateLeft = document.getElementById('gateLeft');
+        const gateRight = document.getElementById('gateRight');
+        const centerBtn = document.getElementById('centerBtn');
 
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+        // --- 1. MỞ CỔNG THIỆP & KÍCH HOẠT HIỆU ỨNG ---
+        function handleOpen() {
+            isOpen = true;
+            document.body.style.overflow = 'unset';
+            document.body.style.height = 'auto';
 
-    // --- 4. ĐỒNG HỒ ĐẾM NGƯỢC ---
-    const targetDate = new Date("2026-08-02T11:00:00").getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
+            // Ẩn cổng
+            gateOverlay.classList.remove('visible');
+            gateOverlay.classList.add('invisible');
+            gateLeft.classList.add('-translate-x-full');
+            gateRight.classList.add('translate-x-full');
+            centerBtn.classList.remove('opacity-100', 'scale-100');
+            centerBtn.classList.add('opacity-0', 'scale-50');
 
-      if (diff > 0) {
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
+            // Hiện nút nhạc
+            musicBtnWrap.classList.remove('opacity-0', 'translate-y-20');
+            musicBtnWrap.classList.add('opacity-100', 'translate-y-0');
 
-        document.getElementById("cd-days").innerText = d < 10 ? "0" + d : d;
-        document.getElementById("cd-hours").innerText = h < 10 ? "0" + h : h;
-        document.getElementById("cd-minutes").innerText = m < 10 ? "0" + m : m;
-        document.getElementById("cd-seconds").innerText = s < 10 ? "0" + s : s;
-      }
-    }, 1000);
+            // Bật nhạc
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
+                musicIcon.classList.add('animate-spin-slow');
+            }).catch(e => console.log("Audio play failed:", e));
 
-    // --- 5. ĐỔI TAB QUÀ TẶNG (MỪNG CƯỚI) ---
-    function switchTab(tab) {
-      currentTab = tab;
-      const data = BANK_INFO[tab];
-      
-      // Update Texts
-      document.getElementById('bankRole').innerText = data.role;
-      document.getElementById('bankName').innerText = data.name;
-      document.getElementById('bankBank').innerText = data.bank;
-      document.getElementById('bankNumber').innerText = data.number;
-      document.getElementById('bankQR').src = data.qr;
+            // Kích hoạt scroll reveal observer
+            initScrollReveal();
+        }
 
-      // Update Styles
-      const tGroom = document.getElementById('tabGroom');
-      const tBride = document.getElementById('tabBride');
-      const wrap = document.getElementById('giftCardWrap');
-      const bg = document.getElementById('giftCardBg');
+        // --- 2. XỬ LÝ NHẠC NỀN ---
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.classList.replace('ph-music-notes', 'ph-speaker-slash');
+                musicIcon.classList.remove('animate-spin-slow');
+            } else {
+                audio.play();
+                musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
+                musicIcon.classList.add('animate-spin-slow');
+            }
+            isPlaying = !isPlaying;
+        }
 
-      if (tab === 'groom') {
-        tGroom.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-blue-600 text-white z-10";
-        tBride.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0";
-        wrap.className = "relative overflow-hidden rounded-b-2xl rounded-tr-2xl shadow-2xl transition-colors duration-500 bg-blue-600";
-        bg.className = "absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 z-0";
-      } else {
-        tBride.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-rose-500 text-white z-10";
-        tGroom.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0";
-        wrap.className = "relative overflow-hidden rounded-b-2xl rounded-tl-2xl shadow-2xl transition-colors duration-500 bg-rose-500";
-        bg.className = "absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-600 z-0";
-      }
-    }
+        // --- 3. SCROLL REVEAL (HIỆN KHI CUỘN) & NÚT LÊN ĐẦU TRANG ---
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-up-active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-    function copyAccount() {
-      const number = BANK_INFO[currentTab].number;
-      navigator.clipboard.writeText(number).then(() => {
-        alert(`Đã sao chép số tài khoản: ${number}`);
-      }).catch(err => alert("Không thể sao chép, vui lòng copy thủ công!"));
-    }
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        }
 
-    function downloadQR() {
-      const url = BANK_INFO[currentTab].qr;
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `QR_${currentTab}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300 && isOpen) {
+                scrollTopWrap.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                scrollTopWrap.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                scrollTopWrap.classList.remove('opacity-100', 'translate-y-0');
+                scrollTopWrap.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }
+        });
 
-// --- 6. XỬ LÝ ALBUM ẨN/HIỆN & LIGHTBOX XEM TỪNG ẢNH ---
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const albumAudio = document.getElementById('albumMusic'); // Khai báo thêm audio album
-    let currentImageIndex = 0;
-    
-    // Danh sách ảnh trong album cưới
-    const GALLERY_IMAGES = [
-      "./public/images/gallery-1.jpg",
-      "./public/images/gallery-2.jpg",
-      "./public/images/gallery-3.jpg",
-      "./public/images/gallery-4.jpg",
-      "./public/images/gallery-5.jpg",
-      "./public/images/gallery-6.jpg"
-    ];
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-    // Hàm ẩn hiện Album khi ấn nút
-    function toggleWeddingAlbum() {
-      const gallery = document.getElementById('weddingGallery');
-      const btnText = document.querySelector('#albumControlBtn span');
-      const btnIcon = document.querySelector('#albumControlBtn i');
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
 
-      if (gallery.classList.contains('hidden')) {
-        // --- BẮT ĐẦU MỞ ALBUM ---
-        gallery.classList.remove('hidden');
-        gallery.classList.add('grid');
-        setTimeout(() => {
-          gallery.classList.remove('opacity-0');
-          gallery.classList.add('opacity-100');
-        }, 50);
-        btnText.innerText = "Đóng Album Ảnh";
-        btnIcon.className = "ph-bold ph-x text-xl";
-        
-        // 🎵 TẠM DỪNG NHẠC NỀN & BẬT NHẠC ALBUM
-        audio.pause(); 
-        albumAudio.volume = 0.6; // Đặt âm lượng nhạc album
-        albumAudio.play().catch(e => console.log("Album audio play failed:", e));
-        
-        // Cập nhật trạng thái icon nhạc nền sang tạm dừng (nếu có)
-        musicIcon.classList.replace('ph-music-notes', 'ph-speaker-slash');
-        musicIcon.classList.remove('animate-spin-slow');
+        // --- 4. ĐỒNG HỒ ĐẾM NGƯỢC ---
+        const targetDate = new Date("2026-08-02T11:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
 
-        // Tự động bật xem ảnh từ tấm đầu tiên
-        openLightbox(GALLERY_IMAGES[0], 0);
-      } else {
-        // --- ĐÓNG ALBUM TỪ NÚT CHÍNH ---
-        closeAlbumActions(gallery, btnText, btnIcon);
-      }
-    }
+            if (diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-    function openLightbox(src, index = -1) {
-      if (index !== -1) {
-        currentImageIndex = index;
-      } else {
-        currentImageIndex = GALLERY_IMAGES.indexOf(src);
-      }
-      
-      lightboxImg.src = src;
-      lightbox.classList.remove('hidden');
-      lightbox.classList.add('flex');
-      document.body.style.overflow = 'hidden'; // Khóa cuộn trang chính khi đang xem lightbox
-    }
+                document.getElementById("cd-days").innerText = d < 10 ? "0" + d : d;
+                document.getElementById("cd-hours").innerText = h < 10 ? "0" + h : h;
+                document.getElementById("cd-minutes").innerText = m < 10 ? "0" + m : m;
+                document.getElementById("cd-seconds").innerText = s < 10 ? "0" + s : s;
+            }
+        }, 1000);
 
-    function closeLightbox() {
-      lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
-      if (isOpen) document.body.style.overflow = 'unset';
-      
-      // Nếu người dùng tắt lightbox nhưng Album vẫn đang mở thì không tắt nhạc album. 
-      // Nhưng nếu bạn muốn tắt nhạc album ngay khi vừa bấm X đóng ảnh, hãy để hàm đóng album chạy luôn:
-      const gallery = document.getElementById('weddingGallery');
-      const btnText = document.querySelector('#albumControlBtn span');
-      const btnIcon = document.querySelector('#albumControlBtn i');
-      if (!gallery.classList.contains('hidden')) {
-         closeAlbumActions(gallery, btnText, btnIcon);
-      }
-    }
+        // --- 5. ĐỔI TAB QUÀ TẶNG (MỪNG CƯỚI) ---
+        function switchTab(tab) {
+            currentTab = tab;
+            const data = BANK_INFO[tab];
 
-    // Hàm phụ dùng chung để đóng Album & Trả lại nhạc nền ban đầu
-    function closeAlbumActions(gallery, btnText, btnIcon) {
-      gallery.classList.add('opacity-0');
-      gallery.classList.remove('opacity-100');
-      setTimeout(() => {
-        gallery.classList.remove('grid');
-        gallery.classList.add('hidden');
-      }, 700);
-      btnText.innerText = "Mở Album Ảnh";
-      btnIcon.className = "ph-bold ph-images text-xl";
+            // Update Texts
+            document.getElementById('bankRole').innerText = data.role;
+            document.getElementById('bankName').innerText = data.name;
+            document.getElementById('bankBank').innerText = data.bank;
+            document.getElementById('bankNumber').innerText = data.number;
+            document.getElementById('bankQR').src = data.qr;
 
-      // 🎵 TẮT NHẠC ALBUM & PHÁT LẠI NHẠC NỀN
-      albumAudio.pause();
-      albumAudio.currentTime = 0; // Reset nhạc album về từ đầu
-      
-      if (isPlaying) { // Nếu trước đó người dùng đang bật nhạc nền thì phát lại
-        audio.play().catch(e => console.log("Bg music play failed:", e));
-        musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
-        musicIcon.classList.add('animate-spin-slow');
-      }
-    }
+            // Update Styles
+            const tGroom = document.getElementById('tabGroom');
+            const tBride = document.getElementById('tabBride');
+            const wrap = document.getElementById('giftCardWrap');
+            const bg = document.getElementById('giftCardBg');
 
-    // Hàm chuyển đổi ảnh Trướct/Sau
-    function navigateGallery(direction) {
-      if (currentImageIndex === -1) return;
-      
-      if (direction === 'next') {
-        currentImageIndex = (currentImageIndex + 1) % GALLERY_IMAGES.length;
-      } else {
-        currentImageIndex = (currentImageIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
-      }
-      lightboxImg.src = GALLERY_IMAGES[currentImageIndex];
-    }
+            if (tab === 'groom') {
+                tGroom.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-blue-600 text-white z-10";
+                tBride.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0";
+                wrap.className = "relative overflow-hidden rounded-b-2xl rounded-tr-2xl shadow-2xl transition-colors duration-500 bg-blue-600";
+                bg.className = "absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 z-0";
+            } else {
+                tBride.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-rose-500 text-white z-10";
+                tGroom.className = "flex-1 py-2 font-bold text-sm rounded-t-lg transition-colors duration-200 bg-slate-100 text-slate-500 hover:bg-slate-200 z-0";
+                wrap.className = "relative overflow-hidden rounded-b-2xl rounded-tl-2xl shadow-2xl transition-colors duration-500 bg-rose-500";
+                bg.className = "absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-600 z-0";
+            }
+        }
 
-    // Hỗ trợ chuyển ảnh nhanh bằng phím mũi tên Trái/Phải bàn phím
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('hidden')) {
-        if (e.key === 'ArrowRight') navigateGallery('next');
-        if (e.key === 'ArrowLeft') navigateGallery('prev');
-        if (e.key === 'Escape') closeLightbox();
-      }
-    });
-  </script>
+        function copyAccount() {
+            const number = BANK_INFO[currentTab].number;
+            navigator.clipboard.writeText(number).then(() => {
+                alert(`Đã sao chép số tài khoản: ${number}`);
+            }).catch(err => alert("Không thể sao chép, vui lòng copy thủ công!"));
+        }
+
+        function downloadQR() {
+            const url = BANK_INFO[currentTab].qr;
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `QR_${currentTab}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- 6. XỬ LÝ ALBUM ẨN/HIỆN & LIGHTBOX XEM TỪNG ẢNH ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const albumAudio = document.getElementById('albumMusic'); // Khai báo thêm audio album
+        let currentImageIndex = 0;
+
+        // Danh sách ảnh trong album cưới
+        const GALLERY_IMAGES = [
+            "./public/images/gallery-1.jpg",
+            "./public/images/gallery-2.jpg",
+            "./public/images/gallery-3.jpg",
+            "./public/images/gallery-4.jpg",
+            "./public/images/gallery-5.jpg",
+            "./public/images/gallery-6.jpg"
+        ];
+
+        // Hàm ẩn hiện Album khi ấn nút
+        function toggleWeddingAlbum() {
+            const gallery = document.getElementById('weddingGallery');
+            const btnText = document.querySelector('#albumControlBtn span');
+            const btnIcon = document.querySelector('#albumControlBtn i');
+
+            if (gallery.classList.contains('hidden')) {
+                // --- BẮT ĐẦU MỞ ALBUM ---
+                gallery.classList.remove('hidden');
+                gallery.classList.add('grid');
+                setTimeout(() => {
+                    gallery.classList.remove('opacity-0');
+                    gallery.classList.add('opacity-100');
+                }, 50);
+                btnText.innerText = "Đóng Album Ảnh";
+                btnIcon.className = "ph-bold ph-x text-xl";
+
+                // 🎵 TẠM DỪNG NHẠC NỀN & BẬT NHẠC ALBUM
+                audio.pause();
+                albumAudio.volume = 0.6; // Đặt âm lượng nhạc album
+                albumAudio.play().catch(e => console.log("Album audio play failed:", e));
+
+                // Cập nhật trạng thái icon nhạc nền sang tạm dừng (nếu có)
+                musicIcon.classList.replace('ph-music-notes', 'ph-speaker-slash');
+                musicIcon.classList.remove('animate-spin-slow');
+
+                // Tự động bật xem ảnh từ tấm đầu tiên
+                openLightbox(GALLERY_IMAGES[0], 0);
+            } else {
+                // --- ĐÓNG ALBUM TỪ NÚT CHÍNH ---
+                closeAlbumActions(gallery, btnText, btnIcon);
+            }
+        }
+
+        function openLightbox(src, index = -1) {
+            if (index !== -1) {
+                currentImageIndex = index;
+            } else {
+                currentImageIndex = GALLERY_IMAGES.indexOf(src);
+            }
+
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang chính khi đang xem lightbox
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            if (isOpen) document.body.style.overflow = 'unset';
+
+            // Nếu người dùng tắt lightbox nhưng Album vẫn đang mở thì không tắt nhạc album. 
+            // Nhưng nếu bạn muốn tắt nhạc album ngay khi vừa bấm X đóng ảnh, hãy để hàm đóng album chạy luôn:
+            const gallery = document.getElementById('weddingGallery');
+            const btnText = document.querySelector('#albumControlBtn span');
+            const btnIcon = document.querySelector('#albumControlBtn i');
+            if (!gallery.classList.contains('hidden')) {
+                closeAlbumActions(gallery, btnText, btnIcon);
+            }
+        }
+
+        // Hàm phụ dùng chung để đóng Album & Trả lại nhạc nền ban đầu
+        function closeAlbumActions(gallery, btnText, btnIcon) {
+            gallery.classList.add('opacity-0');
+            gallery.classList.remove('opacity-100');
+            setTimeout(() => {
+                gallery.classList.remove('grid');
+                gallery.classList.add('hidden');
+            }, 700);
+            btnText.innerText = "Mở Album Ảnh";
+            btnIcon.className = "ph-bold ph-images text-xl";
+
+            // 🎵 TẮT NHẠC ALBUM & PHÁT LẠI NHẠC NỀN
+            albumAudio.pause();
+            albumAudio.currentTime = 0; // Reset nhạc album về từ đầu
+
+            if (isPlaying) { // Nếu trước đó người dùng đang bật nhạc nền thì phát lại
+                audio.play().catch(e => console.log("Bg music play failed:", e));
+                musicIcon.classList.replace('ph-speaker-slash', 'ph-music-notes');
+                musicIcon.classList.add('animate-spin-slow');
+            }
+        }
+
+        // Hàm chuyển đổi ảnh Trướct/Sau
+        function navigateGallery(direction) {
+            if (currentImageIndex === -1) return;
+
+            if (direction === 'next') {
+                currentImageIndex = (currentImageIndex + 1) % GALLERY_IMAGES.length;
+            } else {
+                currentImageIndex = (currentImageIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+            }
+            lightboxImg.src = GALLERY_IMAGES[currentImageIndex];
+        }
+
+        // Hỗ trợ chuyển ảnh nhanh bằng phím mũi tên Trái/Phải bàn phím
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') navigateGallery('next');
+                if (e.key === 'ArrowLeft') navigateGallery('prev');
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+    </script>
 </body>
+
 </html>
